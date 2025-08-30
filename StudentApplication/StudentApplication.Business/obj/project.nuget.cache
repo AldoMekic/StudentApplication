@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "qcK0e60J5lnufIhUvr0zlD/caqHoRsS9+6XbejfSK8+L/MdmbUG7/wERGUPcfX1xzr0k3W/5f0Bf1Vz1h0A2XQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\StudentApplication.Business.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
+    "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
+    "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj": {}
+    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\StudentApplication.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj": {
+    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\StudentApplication.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj",
-        "projectName": "StudentApplication",
-        "projectPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\StudentApplication.Data.csproj",
+        "projectName": "StudentApplication.Data",
+        "projectPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\StudentApplication.Data.csproj",
         "packagesPath": "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\obj\\",
+        "outputPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,11 +50,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "AutoMapper": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[14.0.0, )"
+              "version": "[8.0.0, )"
             },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
@@ -64,9 +64,19 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
-            "Swashbuckle.AspNetCore": {
+            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[6.6.2, )"
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -81,9 +91,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

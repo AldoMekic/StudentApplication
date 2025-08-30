@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj": {}
+    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\StudentApplication.Business.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj": {
+    "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\StudentApplication.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj",
-        "projectName": "StudentApplication",
-        "projectPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\StudentApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\StudentApplication.Business.csproj",
+        "projectName": "StudentApplication.Business",
+        "projectPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\StudentApplication.Business.csproj",
         "packagesPath": "C:\\Users\\Aldin_Erna_Mina\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\obj\\",
+        "outputPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,20 +53,6 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[14.0.0, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.6.2, )"
             }
           },
           "imports": [
@@ -81,9 +67,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
