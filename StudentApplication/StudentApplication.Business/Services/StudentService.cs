@@ -73,7 +73,6 @@ namespace StudentApplication.Business.Services
         public async Task RemoveStudent(Student student)
         {
             _databaseContext.Students.Remove(student);
-
             await _databaseContext.SaveChangesAsync();
         }
 

@@ -54,11 +54,11 @@ namespace StudentApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudent([FromBody] StudentRequestDTO actor)
+        public async Task<IActionResult> CreateStudent([FromBody] StudentRequestDTO student)
         {
-            await _studentService.CreateStudent(actor);
+            await _studentService.CreateStudent(student);
 
-            return Ok(actor);
+            return Ok(student);
         }
     }
 }

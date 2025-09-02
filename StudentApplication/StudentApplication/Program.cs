@@ -16,6 +16,9 @@ builder.Services.AddDbContext<DatabaseContext>(
     );
 
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
