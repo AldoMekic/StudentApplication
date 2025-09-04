@@ -87,5 +87,31 @@ namespace StudentApplication.Controllers
 
             return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
         }
+
+        [HttpPost("addGradeToStudent/{studentId}/{gradeId}")]
+        public async Task<IActionResult> AddGradeToStudent(int studentId, int gradeId)
+        {
+            await _studentService.AddGradeToStudent(studentId, gradeId);
+            var student = await _studentService.GetById(studentId);
+
+            return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
+        }
+
+        [HttpGet("getStudentGrades/{studentId}")]
+        public async Task<IActionResult> GetAllGrades(int studentId)
+        {
+            var grades = await _studentService.GetStudentGrades(studentId);
+            var dto = _mapper.Map<List<GradeResponseDTO>>(grades);
+
+            return Ok(dto);
+        }
+
+        [HttpDelete("removeStudentGrade/{studentId}/{gradeId}")]
+        public async Task<IActionResult> RemoveStudentGrade(int studentId, int gradeId)
+        {
+            await _studentService.RemoveStudentGrade(studentId, gradeId);
+
+            return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
+        }
     }
 }
