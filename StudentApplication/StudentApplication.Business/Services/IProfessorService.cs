@@ -17,5 +17,9 @@ namespace StudentApplication.Business.Services
         Task<Professor> GetFirst();
         Task RemoveProfessor(Professor professor);
         Task UpdateProfessor(Professor professor);
+
+        Task AddSubjectToProfessor(int professorId, int subjectId);
+        Task<List<Subject>> GetProfessorSubjects(int professorId);
+        Task RemoveProfessorSubject(int professorId, int subjectId);
     }
 }
