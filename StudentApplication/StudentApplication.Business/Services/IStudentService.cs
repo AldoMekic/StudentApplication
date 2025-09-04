@@ -18,5 +18,9 @@ namespace StudentApplication.Business.Services
         Task<Student> GetFirst();
         Task RemoveStudent(Student student);
         Task UpdateStudent(Student student);
+
+        Task AddSubjectToStudent(int studentId, int subjectId);
+        Task<List<Subject>> GetStudentSubjects(int studentId);
+        Task RemoveStudentSubject(int studentId, int subjectId);
     }
 }

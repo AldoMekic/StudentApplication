@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentApplication.Business.Services;
 using StudentApplication.Contracts.DTOs;
@@ -59,6 +60,32 @@ namespace StudentApplication.Controllers
             await _studentService.CreateStudent(student);
 
             return Ok(student);
+        }
+
+        [HttpPost("addSubjectToStudent/{studentId}/{subjectId}")]
+        public async Task<IActionResult> AddSubjectToStudent(int studentId, int subjectId)
+        {
+            await _studentService.AddSubjectToStudent(studentId, subjectId);
+            var student = await _studentService.GetById(studentId);
+
+            return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
+        }
+
+        [HttpGet("getStudentSubjects/{studentId}")]
+        public async Task<IActionResult> GetAllSubjects(int studentId)
+        {
+            var subjects = await _studentService.GetStudentSubjects(studentId);
+            var dto = _mapper.Map<List<SubjectResponseDTO>>(subjects);
+
+            return Ok(dto);
+        }
+
+        [HttpDelete("removeStudentSubject/{studentId}/{subjectId}")]
+        public async Task<IActionResult> RemoveStudentSubject(int studentId, int subjectId)
+        {
+            await _studentService.RemoveStudentSubject(studentId, subjectId);
+
+            return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
         }
     }
 }
