@@ -61,14 +61,14 @@ namespace StudentApplication.Controllers
             return Ok(professor);
         }
 
-        [HttpPost("addSubjectToProfessor/{professorId}/{subjectId}")]
-        public async Task<IActionResult> AddSubjectToProfessor(int professorId, int subjectId)
-        {
-            await _professorService.AddSubjectToProfessor(professorId, subjectId);
-            var professor = await _professorService.GetById(professorId);
+        //[HttpPost("addSubjectToProfessor/{professorId}/{subjectId}")]
+        //public async Task<IActionResult> AddSubjectToProfessor(int professorId, int subjectId)
+        //{
+        //    await _professorService.AddSubjectToProfessor(professorId, subjectId);
+        //    var professor = await _professorService.GetById(professorId);
 
-            return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
-        }
+        //    return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
+        //}
 
         [HttpGet("getProfessorSubjects/{professorId}")]
         public async Task<IActionResult> GetAllSubjects(int professorId)

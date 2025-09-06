@@ -28,7 +28,13 @@ namespace StudentApplication.Data
                 .HasOne(g => g.Student)
                 .WithMany(s => s.Grades)
                 .HasForeignKey(g => g.StudentId)
-                .OnDelete(DeleteBehavior.Cascade); 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Subject>()
+                .HasOne(s => s.Professor)
+                .WithMany(p => p.Subjects)
+                .HasForeignKey(s => s.ProfessorId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
