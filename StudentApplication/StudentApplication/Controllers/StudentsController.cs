@@ -88,14 +88,14 @@ namespace StudentApplication.Controllers
             return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
         }
 
-        [HttpPost("addGradeToStudent/{studentId}/{gradeId}")]
-        public async Task<IActionResult> AddGradeToStudent(int studentId, int gradeId)
-        {
-            await _studentService.AddGradeToStudent(studentId, gradeId);
-            var student = await _studentService.GetById(studentId);
+        //[HttpPost("addGradeToStudent/{studentId}/{gradeId}")]
+        //public async Task<IActionResult> AddGradeToStudent(int studentId, int gradeId)
+        //{
+        //    await _studentService.AddGradeToStudent(studentId, gradeId);
+        //    var student = await _studentService.GetById(studentId);
 
-            return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
-        }
+        //    return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
+        //}
 
         [HttpGet("getStudentGrades/{studentId}")]
         public async Task<IActionResult> GetAllGrades(int studentId)

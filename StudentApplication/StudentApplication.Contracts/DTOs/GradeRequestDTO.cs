@@ -10,5 +10,6 @@ namespace StudentApplication.Contracts.DTOs
     {
         public int OfficialGrade { get; set; }
         public float TotalScore { get; set; }
+        public int StudentId { get; set; }
     }
 }

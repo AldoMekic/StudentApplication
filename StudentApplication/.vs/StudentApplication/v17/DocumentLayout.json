@@ -3,44 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\gradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\gradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\graderequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\graderequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\igradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\igradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\graderesponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\graderesponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\iprofessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\iprofessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.data\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\studentresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\studentresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\professorresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\professorresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\grade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\grade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,132 +46,93 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "StudentsController.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\StudentsController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\StudentsController.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\StudentsController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\StudentsController.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAAAswEAAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:25:13.929Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ProfessorsController.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\ProfessorsController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\ProfessorsController.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\ProfessorsController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\ProfessorsController.cs",
-              "ViewState": "AQIAAD8AAAAAAAAAAAAqwFYAAABsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:25:11.025Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ProfessorService.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\ProfessorService.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\ProfessorService.cs",
-              "ViewState": "AQIAAF0AAAAAAAAAAAAywFAAAABTAAAA",
+              "Title": "GradeService.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\GradeService.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\GradeService.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\GradeService.cs",
+              "RelativeToolTip": "StudentApplication.Business\\Services\\GradeService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:21:34.577Z",
+              "WhenOpened": "2025-09-06T12:30:03.568Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "StudentService.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\StudentService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\StudentService.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\StudentService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\StudentService.cs",
-              "ViewState": "AQIAAH4AAAAAAAAAAAAiwI4AAAAMAAAA",
+              "DocumentIndex": 2,
+              "Title": "IGradeService.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IGradeService.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IGradeService.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IGradeService.cs",
+              "RelativeToolTip": "StudentApplication.Business\\Services\\IGradeService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:21:31.489Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IStudentService.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IStudentService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IStudentService.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IStudentService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\IStudentService.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:20:50.202Z",
+              "WhenOpened": "2025-09-06T12:30:02.489Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "IProfessorService.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IProfessorService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IProfessorService.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IProfessorService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\IProfessorService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAxAAAA",
+              "Title": "DatabaseContext.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\DatabaseContext.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Data\\DatabaseContext.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\DatabaseContext.cs",
+              "RelativeToolTip": "StudentApplication.Data\\DatabaseContext.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:20:47.89Z",
+              "WhenOpened": "2025-09-06T12:23:07.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GradeRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
+              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-06T12:10:50.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GradeResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
+              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-06T12:10:43.617Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "StudentResponseDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\StudentResponseDTO.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\StudentResponseDTO.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\StudentResponseDTO.cs",
-              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\StudentResponseDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:20:43.921Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProfessorResponseDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\ProfessorResponseDTO.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\ProfessorResponseDTO.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\ProfessorResponseDTO.cs",
-              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\ProfessorResponseDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T12:20:26.201Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Professor.cs",
-              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Professor.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\Professor.cs",
-              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Professor.cs",
-              "RelativeToolTip": "StudentApplication.Data\\Models\\Professor.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T11:29:41.939Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "Student.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Student.cs",
               "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\Student.cs",
               "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Student.cs",
               "RelativeToolTip": "StudentApplication.Data\\Models\\Student.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAkAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T10:49:22.175Z",
+              "WhenOpened": "2025-09-06T12:10:07.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Grade.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Grade.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\Grade.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Grade.cs",
+              "RelativeToolTip": "StudentApplication.Data\\Models\\Grade.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-06T12:09:20.687Z",
               "EditorCaption": ""
             }
           ]
