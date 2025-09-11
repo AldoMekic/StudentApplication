@@ -1,0 +1,41 @@
+:host { display:block; }
+
+.card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(148,163,184,0.18);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  color: #e5e7eb;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.25);
+}
+
+.card-title {
+  margin: 0 0 .25rem 0;
+  font-size: 1.15rem;
+  letter-spacing: .2px;
+}
+
+.muted { color: #cbd5e1; margin: 0 0 .75rem 0; }
+
+.details { margin: 0; padding-left: 1rem; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: .75rem;
+}
+.table th, .table td { padding: .6rem .75rem; text-align: left; }
+.table thead th {
+  background: rgba(148,163,184,0.12);
+  border-bottom: 1px solid rgba(148,163,184,0.2);
+}
+.table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+.chips { display:flex; gap:.5rem; flex-wrap:wrap; }
+.pill {
+  padding: .35rem .75rem;
+  border: 1px solid rgba(148,163,184,0.35);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+}

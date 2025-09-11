@@ -6,13 +6,21 @@ import { AppComponent } from './app.component';
 import { StudentMainPageComponent } from './student-main-page/student-main-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { StudentInfoComponent } from './pages/student-info/student-info.component';
+import { StudentGradesComponent } from './pages/student-grades/student-grades.component';
+import { StudentSubjectsComponent } from './pages/student-subjects/student-subjects.component';
+import { StudentNavbarComponent } from './components/student-navbar/student-navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentMainPageComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    StudentInfoComponent,
+    StudentGradesComponent,
+    StudentSubjectsComponent,
+    StudentNavbarComponent
   ],
   imports: [
     BrowserModule,
