@@ -10,6 +10,9 @@ import { StudentInfoComponent } from './pages/student-info/student-info.componen
 import { StudentGradesComponent } from './pages/student-grades/student-grades.component';
 import { StudentSubjectsComponent } from './pages/student-subjects/student-subjects.component';
 import { StudentNavbarComponent } from './components/student-navbar/student-navbar.component';
+import { ProfessorMainPageComponent } from './pages/professor-main-page/professor-main-page.component';
+import { SubjectsMainPageComponent } from './pages/subjects-main-page/subjects-main-page.component';
+import { GradesMainPageComponent } from './pages/grades-main-page/grades-main-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { StudentNavbarComponent } from './components/student-navbar/student-navb
     StudentInfoComponent,
     StudentGradesComponent,
     StudentSubjectsComponent,
-    StudentNavbarComponent
+    StudentNavbarComponent,
+    ProfessorMainPageComponent,
+    SubjectsMainPageComponent,
+    GradesMainPageComponent
   ],
   imports: [
     BrowserModule,
