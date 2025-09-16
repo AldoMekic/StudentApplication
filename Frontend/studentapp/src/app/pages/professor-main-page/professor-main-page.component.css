@@ -11,3 +11,11 @@
 .welcome h1 { margin: 0 0 .25rem 0; font-size: 1.35rem; letter-spacing: .2px; }
 .welcome p { margin: 0 0 1rem 0; color: #cbd5e1; }
 @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar-col { order: -1; } }
+
+.stack > * + * {
+  margin-top: .75rem;
+}
+
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: 1fr; }
+}

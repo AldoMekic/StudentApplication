@@ -19,7 +19,13 @@ const routes: Routes = [
       { path: 'subjects', component: StudentSubjectsComponent },
     ]},
 
-  { path: 'students', component: StudentMainPageComponent },
+  { path: 'students',
+    component: StudentMainPageComponent,
+    children: [
+      { path: 'info', component: StudentInfoComponent },
+      { path: 'grades', component: StudentGradesComponent },
+      { path: 'subjects', component: StudentSubjectsComponent },
+    ]},
   { path: 'professors',  component: ProfessorMainPageComponent },
   { path: 'subjects',    component: SubjectsMainPageComponent },
   { path: 'grades',      component: GradesMainPageComponent }, 

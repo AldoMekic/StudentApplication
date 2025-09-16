@@ -13,6 +13,8 @@ import { StudentNavbarComponent } from './components/student-navbar/student-navb
 import { ProfessorMainPageComponent } from './pages/professor-main-page/professor-main-page.component';
 import { SubjectsMainPageComponent } from './pages/subjects-main-page/subjects-main-page.component';
 import { GradesMainPageComponent } from './pages/grades-main-page/grades-main-page.component';
+import { SubjectListComponent } from './components/subject-list/subject-list.component';
+import { StudentListComponent } from './components/student-list/student-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { GradesMainPageComponent } from './pages/grades-main-page/grades-main-pa
     StudentNavbarComponent,
     ProfessorMainPageComponent,
     SubjectsMainPageComponent,
-    GradesMainPageComponent
+    GradesMainPageComponent,
+    SubjectListComponent,
+    StudentListComponent
   ],
   imports: [
     BrowserModule,
