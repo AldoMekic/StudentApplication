@@ -13,9 +13,11 @@ namespace StudentApplication.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Professor> Professors { get; set; }
-
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
