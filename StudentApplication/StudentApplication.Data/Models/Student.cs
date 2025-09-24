@@ -13,7 +13,13 @@ namespace StudentApplication.Data.Models
         public string LastName { get; set; }
         public int Age { get; set; }
 
-        public List<Subject> Subjects { get; set; } = new List<Subject>();
+        public int? DepartmentId { get; set; }
+        public Department? Department { get; set; }
+
+        public int? UserId { get; set; }
+        public User? User { get; set; }
+
+        public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
         public List<Grade> Grades { get; set; } = new List<Grade>();
     }
 }

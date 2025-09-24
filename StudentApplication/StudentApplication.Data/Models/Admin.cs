@@ -10,5 +10,7 @@ namespace StudentApplication.Data.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
+
+        public List<Professor> ApprovedProfessors { get; set; } = new List<Professor>();
     }
 }

@@ -32,7 +32,8 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -49,7 +50,8 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -64,15 +66,26 @@ namespace StudentApplication.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("StudentEnrolled")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("SubjectEnrolled")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset>("EnrolledAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Enrollments");
                 });
@@ -85,10 +98,22 @@ namespace StudentApplication.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTimeOffset>("AssignedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("EnrollmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OfficialGrade")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProfessorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<float>("TotalScore")
@@ -96,7 +121,14 @@ namespace StudentApplication.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EnrollmentId")
+                        .IsUnique();
+
+                    b.HasIndex("ProfessorId");
+
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Grades");
                 });
@@ -112,15 +144,44 @@ namespace StudentApplication.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<DateTimeOffset?>("ApprovedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("ApprovedByAdminId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApprovedByAdminId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Professors");
                 });
@@ -136,15 +197,29 @@ namespace StudentApplication.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -159,23 +234,23 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<int>("ProfessorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProfessorId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Subjects");
                 });
@@ -190,7 +265,7 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsProfessor")
                         .HasColumnType("bit");
@@ -204,22 +279,112 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("StudentApplication.Data.Models.Grade", b =>
+            modelBuilder.Entity("StudentApplication.Data.Models.Enrollment", b =>
                 {
                     b.HasOne("StudentApplication.Data.Models.Student", "Student")
-                        .WithMany("Grades")
+                        .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StudentApplication.Data.Models.Subject", "Subject")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Student");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Grade", b =>
+                {
+                    b.HasOne("StudentApplication.Data.Models.Enrollment", "Enrollment")
+                        .WithOne("Grade")
+                        .HasForeignKey("StudentApplication.Data.Models.Grade", "EnrollmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudentApplication.Data.Models.Professor", "Professor")
+                        .WithMany("GivenGrades")
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("StudentApplication.Data.Models.Student", "Student")
+                        .WithMany("Grades")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("StudentApplication.Data.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("Professor");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Professor", b =>
+                {
+                    b.HasOne("StudentApplication.Data.Models.Admin", "ApprovedByAdmin")
+                        .WithMany("ApprovedProfessors")
+                        .HasForeignKey("ApprovedByAdminId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudentApplication.Data.Models.Department", "Department")
+                        .WithMany("Professors")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudentApplication.Data.Models.User", "User")
+                        .WithOne("ProfessorProfile")
+                        .HasForeignKey("StudentApplication.Data.Models.Professor", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ApprovedByAdmin");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Student", b =>
+                {
+                    b.HasOne("StudentApplication.Data.Models.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudentApplication.Data.Models.User", "User")
+                        .WithOne("StudentProfile")
+                        .HasForeignKey("StudentApplication.Data.Models.Student", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Department");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("StudentApplication.Data.Models.Subject", b =>
@@ -227,26 +392,55 @@ namespace StudentApplication.Data.Migrations
                     b.HasOne("StudentApplication.Data.Models.Professor", "Professor")
                         .WithMany("Subjects")
                         .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("StudentApplication.Data.Models.Student", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("StudentId");
 
                     b.Navigation("Professor");
                 });
 
+            modelBuilder.Entity("StudentApplication.Data.Models.Admin", b =>
+                {
+                    b.Navigation("ApprovedProfessors");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Department", b =>
+                {
+                    b.Navigation("Professors");
+
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Enrollment", b =>
+                {
+                    b.Navigation("Grade");
+                });
+
             modelBuilder.Entity("StudentApplication.Data.Models.Professor", b =>
                 {
+                    b.Navigation("GivenGrades");
+
                     b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("StudentApplication.Data.Models.Student", b =>
                 {
-                    b.Navigation("Grades");
+                    b.Navigation("Enrollments");
 
-                    b.Navigation("Subjects");
+                    b.Navigation("Grades");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.Subject", b =>
+                {
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("StudentApplication.Data.Models.User", b =>
+                {
+                    b.Navigation("ProfessorProfile")
+                        .IsRequired();
+
+                    b.Navigation("StudentProfile")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

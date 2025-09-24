@@ -14,5 +14,8 @@ namespace StudentApplication.Data.Models
         public string Password { get; set; }
         public bool IsStudent { get; set; }
         public bool IsProfessor { get; set; }
+
+        public Student StudentProfile { get; set; }
+        public Professor ProfessorProfile { get; set; }
     }
 }

@@ -42,18 +42,20 @@ namespace StudentApplication.Business.Services
 
         public async Task AddSubjectToStudent(int studentId, int subjectId)
         {
-            var student = await _databaseContext.Students.Where(u => u.Id == studentId).FirstOrDefaultAsync();
+        //    var student = await _databaseContext.Students.Where(u => u.Id == studentId).FirstOrDefaultAsync();
 
-            var subject = await _databaseContext.Subjects.Where(r => r.Id == subjectId).FirstOrDefaultAsync();
+        //    var subject = await _databaseContext.Subjects.Where(r => r.Id == subjectId).FirstOrDefaultAsync();
 
-            if (student == null)
-                throw new Exception("Student not found");
-            if (subject == null)
-                throw new Exception("Subject not found");
+        //    if (student == null)
+        //        throw new Exception("Student not found");
+        //    if (subject == null)
+        //        throw new Exception("Subject not found");
 
-            student.Subjects.Add(subject);
+        //    student.Subjects.Add(subject);
 
-            await _databaseContext.SaveChangesAsync();
+        //    await _databaseContext.SaveChangesAsync();
+
+        throw new NotImplementedException();
         }
 
         public async Task CreateStudent(StudentRequestDTO model)
@@ -66,13 +68,13 @@ namespace StudentApplication.Business.Services
 
         public async Task<IEnumerable<Student?>> GetAll()
         {
-            var fromDb = await _databaseContext.Students.Include(u => u.Subjects).Include(u => u.Grades).ToListAsync();
+            var fromDb = await _databaseContext.Students.Include(u => u.Grades).ToListAsync();
             return fromDb;
         }
 
         public async Task<Student> GetById(int id)
         {
-            var result = await _databaseContext.Students.Where(l => l.Id == id).Include(u => u.Subjects).Include(u => u.Grades).FirstOrDefaultAsync();
+            var result = await _databaseContext.Students.Where(l => l.Id == id).Include(u => u.Grades).FirstOrDefaultAsync();
 
             if (result == null)
             {
@@ -84,7 +86,7 @@ namespace StudentApplication.Business.Services
 
         public async Task<Student> GetByName(string name)
         {
-            var result = await _databaseContext.Students.Where(a => a.FirstName == name).Include(u => u.Subjects).Include(u => u.Grades).FirstOrDefaultAsync();
+            var result = await _databaseContext.Students.Where(a => a.FirstName == name).Include(u => u.Grades).FirstOrDefaultAsync();
 
             if (result == null)
             {
@@ -96,7 +98,7 @@ namespace StudentApplication.Business.Services
 
         public async Task<Student> GetFirst()
         {
-            var result = await _databaseContext.Students.Include(u => u.Subjects).Include(u => u.Grades).FirstOrDefaultAsync();
+            var result = await _databaseContext.Students.Include(u => u.Grades).FirstOrDefaultAsync();
             if (result == null)
                 throw new Exception("No students in database");
             return result;
@@ -111,9 +113,11 @@ namespace StudentApplication.Business.Services
 
         public async Task<List<Subject>> GetStudentSubjects(int studentId)
         {
-            var student = await _databaseContext.Students.Where(s => s.Id == studentId).Include(s => s.Subjects).FirstOrDefaultAsync();
+        //    var student = await _databaseContext.Students.Where(s => s.Id == studentId).FirstOrDefaultAsync();
 
-            return student.Subjects;
+        //    return student.Subjects;
+
+        throw new NotImplementedException();
         }
 
         public async Task RemoveStudent(Student student)
@@ -140,18 +144,20 @@ namespace StudentApplication.Business.Services
 
         public async Task RemoveStudentSubject(int studentId, int subjectId)
         {
-            var student = await _databaseContext.Students.Where(st => st.Id == studentId).Include(st => st.Subjects).FirstOrDefaultAsync();
+            //var student = await _databaseContext.Students.Where(st => st.Id == studentId).Include(st => st.Subjects).FirstOrDefaultAsync();
 
-            var subject = await _databaseContext.Subjects.Where(su => su.Id == subjectId).FirstOrDefaultAsync();
+            //var subject = await _databaseContext.Subjects.Where(su => su.Id == subjectId).FirstOrDefaultAsync();
 
-            if (student == null)
-                throw new Exception("Student not found");
-            if (subject == null)
-                throw new Exception("Subject not found");
+            //if (student == null)
+            //    throw new Exception("Student not found");
+            //if (subject == null)
+            //    throw new Exception("Subject not found");
 
-            student.Subjects.Remove(subject);
+            //student.Subjects.Remove(subject);
 
-            await _databaseContext.SaveChangesAsync();
+            //await _databaseContext.SaveChangesAsync();
+
+            throw new NotImplementedException();
         }
 
         public async Task UpdateStudent(Student student)

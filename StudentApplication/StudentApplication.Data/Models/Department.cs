@@ -10,5 +10,8 @@ namespace StudentApplication.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public List<Student> Students { get; set; } = new List<Student>();
+        public List<Professor> Professors { get; set;} = new List<Professor>();
     }
 }

@@ -14,5 +14,15 @@ namespace StudentApplication.Data.Models
         public float TotalScore { get; set; }
         public int StudentId { get; set; }
         public Student Student { get; set; }
+
+        public int ProfessorId { get; set; }
+        public Professor Professor { get; set; } = default!;
+        public DateTimeOffset AssignedAt { get; set; } = DateTimeOffset.UtcNow;
+
+        public int EnrollmentId { get; set; }
+        public Enrollment Enrollment { get; set; }
+
+        public int SubjectId { get; set; }
+        public Subject Subject { get; set; }
     }
 }
