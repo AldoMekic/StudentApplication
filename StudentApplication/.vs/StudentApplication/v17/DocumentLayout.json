@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.business\\mappingprofiles\\usermappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\mappingprofiles\\usermappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\userloginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\userloginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\userrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\userrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldin_erna_mina\\desktop\\student application\\studentapplication\\studentapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -55,6 +79,84 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UserMappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\UserMappingProfile.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Business\\MappingProfiles\\UserMappingProfile.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\UserMappingProfile.cs",
+              "RelativeToolTip": "StudentApplication.Business\\MappingProfiles\\UserMappingProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:09:48.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserLoginRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserLoginRequestDTO.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\UserLoginRequestDTO.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserLoginRequestDTO.cs",
+              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\UserLoginRequestDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:09:27.152Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "StudentApplication\\Controllers\\UsersController.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAuwF0AAAB3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:08:50.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserResponseDTO.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\UserResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserResponseDTO.cs",
+              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\UserResponseDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:06:32.893Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserRequestDTO.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\UserRequestDTO.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\UserRequestDTO.cs",
+              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\UserRequestDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:05:56.174Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\User.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\User.cs",
+              "RelativeToolTip": "StudentApplication.Data\\Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T11:04:15.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Program.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Program.cs",
@@ -62,12 +164,11 @@
               "RelativeToolTip": "StudentApplication\\Program.cs",
               "ViewState": "AQIAAAIAAAAAAAAAAAAAwBsAAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T11:26:10.817Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T11:26:10.817Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "EnrollmentsController.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\EnrollmentsController.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Controllers\\EnrollmentsController.cs",
@@ -75,12 +176,11 @@
               "RelativeToolTip": "StudentApplication\\Controllers\\EnrollmentsController.cs",
               "ViewState": "AQIAABQAAAAAAAAAAAAAADQAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T11:22:57.956Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T11:22:57.956Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "EnrollmentMappingProfile.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\EnrollmentMappingProfile.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\MappingProfiles\\EnrollmentMappingProfile.cs",
@@ -88,12 +188,11 @@
               "RelativeToolTip": "StudentApplication.Business\\MappingProfiles\\EnrollmentMappingProfile.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T11:22:10.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T11:22:10.14Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "EnrollmentService.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\EnrollmentService.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\EnrollmentService.cs",
@@ -101,12 +200,11 @@
               "RelativeToolTip": "StudentApplication.Business\\Services\\EnrollmentService.cs",
               "ViewState": "AQIAAB8AAAAAAAAAAAAQwDkAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T11:18:32.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T11:18:32.14Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "IEnrollmentService.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IEnrollmentService.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IEnrollmentService.cs",
@@ -114,12 +212,11 @@
               "RelativeToolTip": "StudentApplication.Business\\Services\\IEnrollmentService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T11:18:16.253Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T11:18:16.253Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Controllers\\AdminController.cs",
@@ -127,12 +224,11 @@
               "RelativeToolTip": "StudentApplication\\Controllers\\AdminController.cs",
               "ViewState": "AQIAAB8AAAAAAAAAAAAAADUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T10:55:16.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T10:55:16.333Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "AdminMappingProfile.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\AdminMappingProfile.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\MappingProfiles\\AdminMappingProfile.cs",
@@ -140,12 +236,11 @@
               "RelativeToolTip": "StudentApplication.Business\\MappingProfiles\\AdminMappingProfile.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T10:50:50.556Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T10:50:50.556Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "AdminService.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\AdminService.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\AdminService.cs",
@@ -153,12 +248,11 @@
               "RelativeToolTip": "StudentApplication.Business\\Services\\AdminService.cs",
               "ViewState": "AQIAACMAAAAAAAAAAAAgwDoAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T10:40:19.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T10:40:19.832Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "IAdminService.cs",
               "DocumentMoniker": "C:\\Users\\Aldin_Erna_Mina\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IAdminService.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IAdminService.cs",
@@ -166,8 +260,7 @@
               "RelativeToolTip": "StudentApplication.Business\\Services\\IAdminService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T10:40:10.636Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-22T10:40:10.636Z"
             }
           ]
         },

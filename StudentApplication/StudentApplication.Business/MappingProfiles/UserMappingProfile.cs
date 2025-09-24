@@ -15,6 +15,7 @@ namespace StudentApplication.Business.MappingProfiles
         {
             CreateMap<User, UserResponseDTO>();
             CreateMap<UserRequestDTO, User>();
+            CreateMap<UserLoginRequestDTO, User>();
         }
     }
 }

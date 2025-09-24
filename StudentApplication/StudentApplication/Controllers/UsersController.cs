@@ -70,7 +70,7 @@ namespace StudentApplication.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserRequestDTO login)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestDTO login)
         {
             var user = await _userService.GetByUsername(login.Username);
 
@@ -90,6 +90,8 @@ namespace StudentApplication.Controllers
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+                new Claim("is_student", userInfo.IsStudent.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
+                new Claim("is_professor", userInfo.IsProfessor.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
