@@ -21,14 +21,12 @@
       </button>
       <button
         [class.active]="activeTab === 'departments'"
-        (click)="activeTab = 'departments'"
-      >
+        (click)="activeTab = 'departments'">
         Departments
       </button>
       <button
         [class.active]="activeTab === 'subjects'"
-        (click)="activeTab = 'subjects'"
-      >
+        (click)="activeTab = 'subjects'">
         Subjects
       </button>
     </div>
@@ -79,7 +77,7 @@
         <button class="btn-primary" (click)="openDepartmentModal()">Add Department</button>
       </div>
 
-      <div class="card-grid" *ngIf="departments.length > 0">
+       <div class="card-grid" *ngIf="departments.length > 0">
         <div class="card" *ngFor="let department of departments">
           <div class="card-header">
             <h3>{{ department.name }}</h3>
@@ -102,28 +100,21 @@
         <button class="btn-primary" (click)="openSubjectModal()">Add Subject</button>
       </div>
 
-      <div class="table-container" *ngIf="subjects.length > 0">
+       <div class="table-container" *ngIf="subjects.length > 0">
         <table>
           <thead>
             <tr>
               <th>Title</th>
               <th>Academic Year</th>
-              <th>Professor</th>
-              <th>Total Classes</th>
+              <th>Description</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let subject of subjects">
               <td>{{ subject.title }}</td>
-              <td>{{ subject.academic_year }}</td>
-              <td>
-  <span *ngIf="subject.professor?.user; else notAssigned">
-    {{ subject.professor?.user?.first_name }} {{ subject.professor?.user?.last_name }}
-  </span>
-  <ng-template #notAssigned>Not assigned</ng-template>
-</td>
-              <td>{{ subject.total_classes }}</td>
+              <td>{{ subject.academicYear || '—' }}</td>
+              <td>{{ subject.description || '—' }}</td>
               <td>
                 <button class="btn-sm btn-danger" (click)="deleteSubject(subject.id)">
                   Delete
@@ -139,6 +130,7 @@
     </div>
   </div>
 
+
   <div class="loading-state" *ngIf="loading">
     <p>Loading...</p>
   </div>
@@ -153,37 +145,15 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="deptName">Department Name *</label>
-        <input
-          type="text"
-          id="deptName"
-          [(ngModel)]="newDepartment.name"
-          name="deptName"
-          placeholder="e.g., Computer Science"
-          required
-        />
+        <input type="text" id="deptName" [(ngModel)]="newDepartment.name" name="deptName" required />
       </div>
-
       <div class="form-group">
         <label for="deptCode">Department Code *</label>
-        <input
-          type="text"
-          id="deptCode"
-          [(ngModel)]="newDepartment.code"
-          name="deptCode"
-          placeholder="e.g., CS"
-          required
-        />
+        <input type="text" id="deptCode" [(ngModel)]="newDepartment.code" name="deptCode" required />
       </div>
-
       <div class="form-group">
         <label for="deptDescription">Description</label>
-        <textarea
-          id="deptDescription"
-          [(ngModel)]="newDepartment.description"
-          name="deptDescription"
-          rows="3"
-          placeholder="Department description"
-        ></textarea>
+        <textarea id="deptDescription" [(ngModel)]="newDepartment.description" name="deptDescription" rows="3"></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -202,64 +172,15 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="subjectTitle">Subject Title *</label>
-        <input
-          type="text"
-          id="subjectTitle"
-          [(ngModel)]="newSubject.title"
-          name="subjectTitle"
-          placeholder="e.g., Data Structures"
-          required
-        />
+        <input type="text" id="subjectTitle" [(ngModel)]="newSubject.title" name="subjectTitle" required />
       </div>
-
       <div class="form-group">
-        <label for="academicYear">Academic Year *</label>
-        <input
-          type="text"
-          id="academicYear"
-          [(ngModel)]="newSubject.academic_year"
-          name="academicYear"
-          placeholder="e.g., 2024/2025"
-          required
-        />
+        <label for="academicYear">Academic Year</label>
+        <input type="text" id="academicYear" [(ngModel)]="newSubject.academicYear" name="academicYear" />
       </div>
-
-      <div class="form-group">
-        <label for="subjectProfessor">Assign Professor *</label>
-        <select
-          id="subjectProfessor"
-          [(ngModel)]="newSubject.professor_id"
-          name="subjectProfessor"
-          required
-        >
-          <option value="">Select a professor</option>
-          <option *ngFor="let prof of approvedProfessors" [value]="prof.id">
-            {{ prof.user.first_name }} {{ prof.user.last_name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="totalClasses">Total Classes</label>
-        <input
-          type="number"
-          id="totalClasses"
-          [(ngModel)]="newSubject.total_classes"
-          name="totalClasses"
-          min="1"
-          required
-        />
-      </div>
-
       <div class="form-group">
         <label for="subjectDescription">Description</label>
-        <textarea
-          id="subjectDescription"
-          [(ngModel)]="newSubject.description"
-          name="subjectDescription"
-          rows="3"
-          placeholder="Subject description"
-        ></textarea>
+        <textarea id="subjectDescription" [(ngModel)]="newSubject.description" name="subjectDescription" rows="3"></textarea>
       </div>
     </div>
     <div class="modal-footer">

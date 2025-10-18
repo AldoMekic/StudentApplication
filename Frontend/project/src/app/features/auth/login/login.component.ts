@@ -12,7 +12,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email = '';
+  username = '';
   password = '';
   error = '';
   loading = false;
@@ -23,7 +23,7 @@ export class LoginComponent {
   ) {}
 
   async onSubmit() {
-    if (!this.email || !this.password) {
+    if (!this.username || !this.password) {
       this.error = 'Please fill in all fields';
       return;
     }
@@ -32,9 +32,9 @@ export class LoginComponent {
     this.error = '';
 
     try {
-      await this.authService.login(this.email, this.password);
+      await this.authService.login(this.username, this.password);
     } catch (err: any) {
-      this.error = err.message || 'Login failed';
+      this.error = err?.message || 'Login failed';
     } finally {
       this.loading = false;
     }

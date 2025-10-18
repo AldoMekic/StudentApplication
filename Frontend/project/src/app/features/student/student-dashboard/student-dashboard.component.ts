@@ -2,34 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { SupabaseService } from '../../../core/services/supabase.service';
+import { StudentsService, SubjectResponseDTO, GradeResponseDTO } from '../../../core/services/students.service';
+import { SubjectsService } from '../../../core/services/subjects.service';
 
-interface Subject {
-  id: string;
-  title: string;
-  academic_year: string;
-  description: string;
-  professor_name?: string;
+interface EnrollmentCard {
+  id: number;                // we’ll treat this as subjectId for UI purposes
+  status: 'attending' | 'completed' | 'dropped';
+  enrolled_at?: string;
+  subject: SubjectResponseDTO;
+  attendance_percentage?: number; // backend doesn’t provide; we’ll omit for now
 }
 
-interface Enrollment {
-  id: string;
-  status: string;
-  enrolled_at: string;
-  subject: Subject;
-  attendance_percentage?: number;
-}
-
-interface Grade {
-  id: string;
-  grade_value: number;
-  final_score: number;
-  subject_name: string;
-  professor_name: string;
-  assigned_date: string;
-  annulment_requested: boolean;
-  can_request_annulment: boolean;
-}
+type AvailableSubject = SubjectResponseDTO & { professor_name?: string };
 
 @Component({
   selector: 'app-student-dashboard',
@@ -40,177 +24,124 @@ interface Grade {
 })
 export class StudentDashboardComponent implements OnInit {
   studentName = '';
-  enrollments: Enrollment[] = [];
-  grades: Grade[] = [];
-  availableSubjects: Subject[] = [];
+  enrollments: EnrollmentCard[] = [];
+  grades: (GradeResponseDTO & {
+  subject_name?: string;
+  professor_name?: string;
+  assigned_date?: string;
+  can_request_annulment?: boolean;
+  annulment_requested?: boolean;
+  grade_value?: number;
+  final_score?: number;
+})[] = [];
+  availableSubjects: AvailableSubject[] = [];
   loading = true;
   activeTab: 'enrollments' | 'grades' | 'subjects' = 'enrollments';
-  studentId = '';
+  studentId: number | null = null;
 
   constructor(
     public authService: AuthService,
-    private supabase: SupabaseService
+    private studentsService: StudentsService,
+    private subjectsService: SubjectsService
   ) {}
 
   async ngOnInit() {
-    await this.loadStudentData();
+    await this.initStudent();
   }
 
-  async loadStudentData() {
+  private async initStudent() {
     this.loading = true;
-    const user = this.authService.getUserProfile();
+    try {
+      const user = this.authService.getUserProfile();
+      this.studentName = user ? (user.first_name || user.email || 'Student') : 'Student';
 
-    if (user) {
-      this.studentName = `${user.first_name} ${user.last_name}`;
+      // TEMP: try to read known studentId, otherwise pick the first student from API.
+      const saved = localStorage.getItem('student_id');
+      if (saved) {
+        this.studentId = Number(saved);
+      } else {
+        const all = await this.studentsService.getAll();
+        if (all && all.length) {
+          this.studentId = all[0].id;
+          localStorage.setItem('student_id', String(this.studentId));
+        }
+      }
 
-      const { data: studentData } = await this.supabase.client
-        .from('students')
-        .select('id')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (studentData) {
-        this.studentId = studentData.id;
+      if (this.studentId != null) {
         await Promise.all([
           this.loadEnrollments(),
           this.loadGrades(),
           this.loadAvailableSubjects()
         ]);
       }
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
   }
 
   async loadEnrollments() {
-    const { data, error } = await this.supabase.client
-      .from('enrollments')
-      .select(`
-        id,
-        status,
-        enrolled_at,
-        subject:subjects (
-          id,
-          title,
-          academic_year,
-          description
-        )
-      `)
-      .eq('student_id', this.studentId)
-      .order('enrolled_at', { ascending: false });
+    if (this.studentId == null) return;
+    const subjects = await this.studentsService.getStudentSubjects(this.studentId);
 
-    if (data) {
-      this.enrollments = data.map((e: any) => ({
-        ...e,
-        subject: e.subject
-      }));
+    // Treat "enrollments" as subjects with default status 'attending'
+    this.enrollments = subjects.map(s => ({
+      id: s.id,
+      status: 'attending', // backend endpoint doesn’t return status; placeholder
+      enrolled_at: '',     // not available
+      subject: s
+    }));
 
-      for (const enrollment of this.enrollments) {
-        enrollment.attendance_percentage = await this.calculateAttendancePercentage(enrollment.id);
-      }
-    }
-  }
-
-  async calculateAttendancePercentage(enrollmentId: string): Promise<number> {
-    const { data: attendanceRecords } = await this.supabase.client
-      .from('attendance_records')
-      .select('was_present')
-      .eq('enrollment_id', enrollmentId);
-
-    if (!attendanceRecords || attendanceRecords.length === 0) return 0;
-
-    const presentCount = attendanceRecords.filter(r => r.was_present).length;
-    return Math.round((presentCount / attendanceRecords.length) * 100);
+    // If you later expose enrollment status, map it here properly.
   }
 
   async loadGrades() {
-    const { data, error } = await this.supabase.client
-      .from('grades')
-      .select('*')
-      .eq('student_id', this.studentId)
-      .order('assigned_date', { ascending: false });
+    if (this.studentId == null) return;
+    const grades = await this.studentsService.getStudentGrades(this.studentId);
 
-    if (data) {
-      this.grades = data.map((grade: any) => {
-        const assignedDate = new Date(grade.assigned_date);
-        const daysSinceAssignment = Math.floor((Date.now() - assignedDate.getTime()) / (1000 * 60 * 60 * 24));
-        return {
-          ...grade,
-          can_request_annulment: daysSinceAssignment <= 3 && !grade.annulment_requested
-        };
-      });
-    }
+    // We’ll keep shape simple, and compute the 3-day rule if assignedDate is present
+    this.grades = grades.map(g => {
+  const assignedDate = g['assignedDate'] || g['assigned_date'];
+  let canRequest = false;
+  if (assignedDate) {
+    const d = new Date(assignedDate);
+    const days = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+    canRequest = days <= 3 && !g['annulment_requested'];
+  }
+  return {
+    ...g,
+    subject_name: g['subjectName'] || g['subject_name'],
+    professor_name: g['professorName'] || g['professor_name'],
+    assigned_date: assignedDate,
+    can_request_annulment: canRequest,
+    // supply snake_case for the template if backend uses camelCase
+    grade_value: (g as any).grade_value ?? g.gradeValue,
+    final_score: (g as any).final_score ?? g.finalScore
+  };
+});
   }
 
   async loadAvailableSubjects() {
-    const { data, error } = await this.supabase.client
-      .from('subjects')
-      .select(`
-        id,
-        title,
-        academic_year,
-        description,
-        professor:professors (
-          user:users (
-            first_name,
-            last_name
-          )
-        )
-      `);
-
-    if (data) {
-      const enrolledSubjectIds = this.enrollments.map(e => e.subject.id);
-      this.availableSubjects = data
-        .filter((s: any) => !enrolledSubjectIds.includes(s.id))
-        .map((s: any) => ({
-          id: s.id,
-          title: s.title,
-          academic_year: s.academic_year,
-          description: s.description,
-          professor_name: s.professor?.user ? `${s.professor.user.first_name} ${s.professor.user.last_name}` : 'N/A'
-        }));
-    }
+    const all = await this.subjectsService.getAll();
+    const enrolledIds = new Set<number>(this.enrollments.map(e => e.subject.id));
+    this.availableSubjects = all.filter(s => !enrolledIds.has(s.id));
   }
 
-  async enrollInSubject(subjectId: string) {
-    const { error } = await this.supabase.client
-      .from('enrollments')
-      .insert({
-        student_id: this.studentId,
-        subject_id: subjectId,
-        status: 'attending'
-      });
-
-    if (!error) {
-      await this.loadEnrollments();
-      await this.loadAvailableSubjects();
-    }
+  async enrollInSubject(subjectId: number) {
+    if (this.studentId == null) return;
+    await this.studentsService.addSubjectToStudent(this.studentId, subjectId);
+    await this.loadEnrollments();
+    await this.loadAvailableSubjects();
   }
 
-  async dropSubject(enrollmentId: string) {
-    const { error } = await this.supabase.client
-      .from('enrollments')
-      .update({ status: 'dropped' })
-      .eq('id', enrollmentId);
-
-    if (!error) {
-      await this.loadEnrollments();
-    }
+  async dropSubject(subjectOrEnrollmentId: number) {
+    if (this.studentId == null) return;
+    // our "enrollment id" is actually subjectId in this simplified mapping
+    await this.studentsService.removeStudentSubject(this.studentId, subjectOrEnrollmentId);
+    await this.loadEnrollments();
+    await this.loadAvailableSubjects();
   }
 
-  async requestAnnulment(gradeId: string) {
-    const { error } = await this.supabase.client
-      .from('grades')
-      .update({
-        annulment_requested: true,
-        annulment_request_date: new Date().toISOString()
-      })
-      .eq('id', gradeId);
-
-    if (!error) {
-      await this.loadGrades();
-    }
-  }
-
+  // Keep your CSS hook names for badges
   getStatusClass(status: string): string {
     switch (status) {
       case 'attending': return 'status-attending';
@@ -218,6 +149,11 @@ export class StudentDashboardComponent implements OnInit {
       case 'dropped': return 'status-dropped';
       default: return '';
     }
+  }
+
+  // Not supported by backend yet; leave as no-op
+  async requestAnnulment(_gradeId: number) {
+    alert('Annulment request flow is not available on the backend yet.');
   }
 
   logout() {

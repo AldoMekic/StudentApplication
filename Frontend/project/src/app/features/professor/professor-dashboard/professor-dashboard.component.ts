@@ -2,41 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { SupabaseService } from '../../../core/services/supabase.service';
+import { ProfessorsService, SubjectResponseDTO } from '../../../core/services/professors.service';
+import { EnrollmentsService, EnrollmentResponseDTO } from '../../../core/services/enrollments.service';
+import { StudentsService, StudentResponseDTO } from '../../../core/services/students.service';
+import { GradesService } from '../../../core/services/grades.service';
 
-interface Subject {
-  id: string;
-  title: string;
-  academic_year: string;
-  description: string;
-  total_classes: number;
+interface StudentMini {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  studentNumber?: string;
 }
 
-interface Student {
-  id: string;
-  student_number: string;
-  user: {
-    first_name: string;
-    last_name: string;
-    email: string;
-  };
-}
-
-interface Enrollment {
-  id: string;
-  student_id: string;
-  status: string;
-  student: Student;
-  attendance_percentage?: number;
-  attendance_records?: AttendanceRecord[];
-}
-
-interface AttendanceRecord {
-  id: string;
-  class_date: string;
-  was_present: boolean;
-  activity_comment: string;
-  recorded_at: string;
+interface RosterRow {
+  enrollmentId: number | null;    // not provided by subject → students; try to keep if present
+  subjectId: number;
+  studentId: number;
+  status: 'attending' | 'completed' | 'dropped';
+  student: StudentMini;
 }
 
 @Component({
@@ -48,259 +32,167 @@ interface AttendanceRecord {
 })
 export class ProfessorDashboardComponent implements OnInit {
   professorName = '';
-  professorId = '';
-  subjects: Subject[] = [];
-  selectedSubject: Subject | null = null;
-  enrollments: Enrollment[] = [];
+  professorId: number | null = null;
+
+  subjects: SubjectResponseDTO[] = [];
+  selectedSubject: SubjectResponseDTO | null = null;
+
+  enrollments: RosterRow[] = []; // students in selected subject
   loading = true;
-  activeTab: 'subjects' | 'students' | 'attendance' | 'grades' = 'subjects';
+  activeTab: 'subjects' | 'students' = 'subjects';
 
-  showAttendanceModal = false;
-  attendanceDate = new Date().toISOString().split('T')[0];
-  today = new Date().toISOString().split('T')[0];
-  
-  attendanceData: { [key: string]: { present: boolean; comment: string } } = {};
-
+  // Grade modal
   showGradeModal = false;
-  selectedEnrollment: Enrollment | null = null;
+  selectedEnrollment: RosterRow | null = null;
   gradeValue: number | null = null;
   finalScore: number | null = null;
 
+  // For any template bindings that previously used Date inline
+  maxAttendanceDate = new Date().toISOString().split('T')[0];
+
   constructor(
     public authService: AuthService,
-    private supabase: SupabaseService
+    private professorsService: ProfessorsService,
+    private enrollmentsService: EnrollmentsService,
+    private studentsService: StudentsService,
+    private gradesService: GradesService
   ) {}
 
   async ngOnInit() {
-    await this.loadProfessorData();
+    await this.initProfessor();
   }
 
-  async loadProfessorData() {
+  private async initProfessor() {
     this.loading = true;
-    const user = this.authService.getUserProfile();
+    try {
+      const user = this.authService.getUserProfile();
+      this.professorName = user ? (user.first_name || user.email || 'Professor') : 'Professor';
 
-    if (user) {
-      this.professorName = `${user.first_name} ${user.last_name}`;
+      // TEMP: load professor id from localStorage; otherwise pick the first one
+      const saved = localStorage.getItem('professor_id');
+      if (saved) {
+        this.professorId = Number(saved);
+      } else {
+        const all = await this.professorsService.getAll();
+        if (all && all.length) {
+          this.professorId = all[0].id;
+          localStorage.setItem('professor_id', String(this.professorId));
+        }
+      }
 
-      const { data: professorData } = await this.supabase.client
-        .from('professors')
-        .select('id')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (professorData) {
-        this.professorId = professorData.id;
+      if (this.professorId != null) {
         await this.loadSubjects();
       }
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
   }
 
   async loadSubjects() {
-    const { data, error } = await this.supabase.client
-      .from('subjects')
-      .select('*')
-      .eq('professor_id', this.professorId)
-      .order('academic_year', { ascending: false });
-
-    if (data) {
-      this.subjects = data;
-    }
+    if (this.professorId == null) return;
+    this.subjects = await this.professorsService.getProfessorSubjects(this.professorId);
   }
 
-  async selectSubject(subject: Subject) {
+  async selectSubject(subject: SubjectResponseDTO) {
     this.selectedSubject = subject;
-    await this.loadEnrollments();
     this.activeTab = 'students';
+    await this.loadRosterForSelectedSubject();
   }
 
-  async loadEnrollments() {
+  private async loadRosterForSelectedSubject() {
+    this.enrollments = [];
     if (!this.selectedSubject) return;
 
-    const { data, error } = await this.supabase.client
-      .from('enrollments')
-      .select(`
-        id,
-        student_id,
-        status,
-        student:students!inner (
-          id,
-          student_number,
-          user:users!inner (
-            first_name,
-            last_name,
-            email
-          )
-        )
-      `)
-      .eq('subject_id', this.selectedSubject.id);
+    // Compose roster from enrollments + per-student calls
+    // GET all enrollments, then filter by subjectId
+    const allEnrollments = await this.enrollmentsService.getAll();
 
-    if (data) {
-      this.enrollments = data.map((e: any) => ({
-        id: e.id,
-        student_id: e.student_id,
-        status: e.status,
-        student: {
-          id: e.student.id,
-          student_number: e.student.student_number,
-          user: e.student.user
-        }
-      }));
-
-      for (const enrollment of this.enrollments) {
-        const percentage = await this.calculateAttendancePercentage(enrollment.id);
-        enrollment.attendance_percentage = percentage;
-      }
-    }
-  }
-
-  async calculateAttendancePercentage(enrollmentId: string): Promise<number> {
-    const { data: attendanceRecords } = await this.supabase.client
-      .from('attendance_records')
-      .select('was_present')
-      .eq('enrollment_id', enrollmentId);
-
-    if (!attendanceRecords || attendanceRecords.length === 0) return 0;
-
-    const presentCount = attendanceRecords.filter(r => r.was_present).length;
-    return Math.round((presentCount / attendanceRecords.length) * 100);
-  }
-
-  openAttendanceModal() {
-    this.showAttendanceModal = true;
-    this.attendanceDate = new Date().toISOString().split('T')[0];
-    this.attendanceData = {};
-
-    this.enrollments
-      .filter(e => e.status === 'attending')
-      .forEach(enrollment => {
-        this.attendanceData[enrollment.id] = {
-          present: false,
-          comment: ''
-        };
-      });
-  }
-
-  async submitAttendance() {
-    if (!this.selectedSubject) return;
-
-    const classDate = new Date(this.attendanceDate);
-    const now = new Date();
-    const hoursSinceClass = (now.getTime() - classDate.getTime()) / (1000 * 60 * 60);
-
-    if (hoursSinceClass > 24) {
-      alert('Cannot record attendance more than 24 hours after class date');
-      return;
-    }
-
-    const records = Object.entries(this.attendanceData).map(([enrollmentId, data]) => {
-      const enrollment = this.enrollments.find(e => e.id === enrollmentId);
-      return {
-        enrollment_id: enrollmentId,
-        student_id: enrollment!.student_id,
-        subject_id: this.selectedSubject!.id,
-        professor_id: this.professorId,
-        class_date: this.attendanceDate,
-        was_present: data.present,
-        activity_comment: data.comment || null
-      };
+    // Find a property name that matches backend DTO: try "subjectId" or "subject_id"
+    const filtered = (allEnrollments || []).filter((e: any) => {
+      const sid = (e.subjectId ?? e.subject_id);
+      return sid === this.selectedSubject!.id;
     });
 
-    const { error } = await this.supabase.client
-      .from('attendance_records')
-      .insert(records);
+    // For each, fetch student info
+    const rows: RosterRow[] = [];
+    for (const e of filtered) {
+      const maybeId = (e.studentId ?? e.student_id);
+if (maybeId == null) continue; // skip if backend didn’t send a student id
+const studentId = Number(maybeId);
+      let studentInfo: StudentResponseDTO | null = null;
+      try {
+        studentInfo = await this.studentsService.getById(studentId);
+      } catch {
+        studentInfo = null;
+      }
 
-    if (!error) {
-      this.showAttendanceModal = false;
-      await this.loadEnrollments();
-    } else {
-      alert('Error recording attendance: ' + error.message);
+      // Try to map common Student shape; leave blanks if fields differ
+      const mini: StudentMini = {
+        id: studentId,
+        firstName: (studentInfo as any)?.firstName ?? (studentInfo as any)?.name ?? '',
+        lastName: (studentInfo as any)?.lastName ?? (studentInfo as any)?.surname ?? '',
+        email: (studentInfo as any)?.email ?? '',
+        studentNumber: (studentInfo as any)?.studentNumber ?? (studentInfo as any)?.student_number ?? ''
+      };
+
+      rows.push({
+        enrollmentId: e.id ?? null,
+        subjectId: this.selectedSubject.id,
+        studentId,
+        status: (e.status ?? 'attending') as any,
+        student: mini
+      });
     }
+
+    this.enrollments = rows;
   }
 
-  async openGradeModal(enrollment: Enrollment) {
+  // === Grade modal ===
+  openGradeModal(enrollment: RosterRow) {
     this.selectedEnrollment = enrollment;
     this.gradeValue = null;
     this.finalScore = null;
-
-    const { data: attendanceRecords } = await this.supabase.client
-      .from('attendance_records')
-      .select('*')
-      .eq('enrollment_id', enrollment.id)
-      .order('class_date', { ascending: false });
-
-    if (attendanceRecords) {
-      this.selectedEnrollment.attendance_records = attendanceRecords;
-    }
-
     this.showGradeModal = true;
-  }
-
-  async submitGrade() {
-    if (!this.selectedEnrollment || !this.selectedSubject || this.gradeValue === null || this.finalScore === null) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    if (this.gradeValue < 0 || this.gradeValue > 10) {
-      alert('Grade must be between 0 and 10');
-      return;
-    }
-
-    const attendancePercentage = this.selectedEnrollment.attendance_percentage || 0;
-    if (attendancePercentage < 75) {
-      alert('Student must have at least 75% attendance to receive a grade');
-      return;
-    }
-
-    const { data: existingGrade } = await this.supabase.client
-      .from('grades')
-      .select('id')
-      .eq('enrollment_id', this.selectedEnrollment.id)
-      .maybeSingle();
-
-    if (existingGrade) {
-      alert('Grade already assigned for this enrollment');
-      return;
-    }
-
-    const { error: gradeError } = await this.supabase.client
-      .from('grades')
-      .insert({
-        enrollment_id: this.selectedEnrollment.id,
-        student_id: this.selectedEnrollment.student_id,
-        subject_id: this.selectedSubject.id,
-        professor_id: this.professorId,
-        grade_value: this.gradeValue,
-        final_score: this.finalScore,
-        subject_name: this.selectedSubject.title,
-        professor_name: this.professorName,
-        student_name: `${this.selectedEnrollment.student.user.first_name} ${this.selectedEnrollment.student.user.last_name}`
-      });
-
-    if (gradeError) {
-      alert('Error assigning grade: ' + gradeError.message);
-      return;
-    }
-
-    const { error: enrollmentError } = await this.supabase.client
-      .from('enrollments')
-      .update({ status: 'completed', completed_at: new Date().toISOString() })
-      .eq('id', this.selectedEnrollment.id);
-
-    if (!enrollmentError) {
-      this.showGradeModal = false;
-      await this.loadEnrollments();
-    }
-  }
-
-  closeAttendanceModal() {
-    this.showAttendanceModal = false;
   }
 
   closeGradeModal() {
     this.showGradeModal = false;
     this.selectedEnrollment = null;
+    this.gradeValue = null;
+    this.finalScore = null;
+  }
+
+  async submitGrade() {
+    if (!this.selectedEnrollment || !this.selectedSubject || this.professorId == null) {
+      alert('Missing required data.');
+      return;
+    }
+    if (this.gradeValue == null || this.finalScore == null) {
+      alert('Please fill in grade and final score.');
+      return;
+    }
+
+    // Best-guess GradeRequest payload based on your controllers/mappings.
+    // If your GradeRequestDTO uses different field names, tell me and I’ll align it.
+    const dto: any = {
+      studentId: this.selectedEnrollment.studentId,
+      subjectId: this.selectedSubject.id,
+      professorId: this.professorId,
+      gradeValue: this.gradeValue,
+      finalScore: this.finalScore,
+      // Optional extras if your DTO supports them:
+      // enrollmentId: this.selectedEnrollment.enrollmentId,
+      // subjectName: this.selectedSubject.title,
+      // professorName: this.professorName
+    };
+
+    try {
+      await this.gradesService.create(dto);
+      this.closeGradeModal();
+      // Optionally refresh something here (e.g., disable the button or mark as completed)
+    } catch (err: any) {
+      alert('Failed to assign grade. If the backend expects different field names, I can adjust the payload.');
+    }
   }
 
   logout() {

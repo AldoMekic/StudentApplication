@@ -1,17 +1,14 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SupabaseService } from '../services/supabase.service';
+import { AuthService } from '../services/auth.service';
 
 export const authGuard = () => {
-  const supabase = inject(SupabaseService);
+  const auth = inject(AuthService);
   const router = inject(Router);
 
-  const user = supabase.getCurrentUser();
-
-  if (!user) {
+  if (!auth.isAuthenticated()) {
     router.navigate(['/login']);
     return false;
   }
-
   return true;
 };
