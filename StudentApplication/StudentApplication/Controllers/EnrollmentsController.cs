@@ -19,38 +19,34 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllEnrollments")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Enrollment?>, IEnumerable<EnrollmentResponseDTO>>(await _enrollmentService.GetAll()));
+            var all = await _enrollmentService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Enrollment?>, IEnumerable<EnrollmentResponseDTO>>(all));
         }
 
-
-        [HttpDelete("deleteEnrollment/{id}")]
-        public async Task<IActionResult> DeleteEnrollment(int id)
-        {
-            var enrollment = await _enrollmentService.GetById(id);
-
-            await _enrollmentService.RemoveEnrollment(enrollment);
-
-            return Ok(enrollment);
-        }
-
-
-        [HttpGet("getEnrollmentById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetEnrollment))]
         public async Task<IActionResult> GetEnrollment(int id)
         {
             var enrollment = await _enrollmentService.GetById(id);
-
             return Ok(_mapper.Map<Enrollment, EnrollmentResponseDTO>(enrollment));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateEnrollment([FromBody] EnrollmentRequestDTO enrollment)
         {
-            await _enrollmentService.CreateEnrollment(enrollment);
+            var created = await _enrollmentService.CreateEnrollment(enrollment);
+            var dto = _mapper.Map<Enrollment, EnrollmentResponseDTO>(await _enrollmentService.GetById(created.Id));
+            return CreatedAtAction(nameof(GetEnrollment), new { id = created.Id }, dto);
+        }
 
-            return Ok(enrollment);
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteEnrollment(int id)
+        {
+            var enrollment = await _enrollmentService.GetById(id);
+            await _enrollmentService.RemoveEnrollment(enrollment);
+            return NoContent();
         }
     }
 }

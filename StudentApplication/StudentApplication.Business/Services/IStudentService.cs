@@ -19,11 +19,10 @@ namespace StudentApplication.Business.Services
         Task RemoveStudent(Student student);
         Task UpdateStudent(Student student);
 
-        Task AddSubjectToStudent(int studentId, int subjectId);
+        Task EnrollStudentInSubject(int studentId, int subjectId);
         Task<List<Subject>> GetStudentSubjects(int studentId);
-        Task RemoveStudentSubject(int studentId, int subjectId);
+        Task UnenrollStudentFromSubject(int studentId, int subjectId);
 
-        Task AddGradeToStudent(int studentId, int gradeId);
         Task<List<Grade>> GetStudentGrades(int studentId);
         Task RemoveStudentGrade(int studentId, int gradeId);
     }

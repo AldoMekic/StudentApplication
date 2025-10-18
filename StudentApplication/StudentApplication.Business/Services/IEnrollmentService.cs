@@ -10,9 +10,10 @@ namespace StudentApplication.Business.Services
 {
     public interface IEnrollmentService
     {
-        Task CreateEnrollment(EnrollmentRequestDTO model);
+        Task<Enrollment> CreateEnrollment(EnrollmentRequestDTO model);
         Task<IEnumerable<Enrollment?>> GetAll();
         Task<Enrollment> GetById(int id);
+        Task<Enrollment?> GetByComposite(int studentId, int subjectId);
         Task RemoveEnrollment(Enrollment enrollment);
         Task UpdateEnrollment(Enrollment enrollment);
     }

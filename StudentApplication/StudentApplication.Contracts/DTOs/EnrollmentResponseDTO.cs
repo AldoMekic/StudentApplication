@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace StudentApplication.Contracts.DTOs
 {
+    public enum EnrollmentStatusDTO { Attending = 0, Completed = 1, Dropped = 2 }
+
     public class EnrollmentResponseDTO
     {
         public int Id { get; set; }
-        public string StudentEnrolled { get; set; }
-        public string SubjectEnrolled { get; set; }
+        public int StudentId { get; set; }
+        public int SubjectId { get; set; }
+        public EnrollmentStatusDTO Status { get; set; }
+        public DateTimeOffset EnrolledAt { get; set; }
+        public DateTimeOffset? CompletedAt { get; set; }
+
+        public SubjectResponseDTO Subject { get; set; }
+        public GradeResponseDTO? Grade { get; set; }
     }
 }

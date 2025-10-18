@@ -19,29 +19,17 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllAdmins")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Admin?>, IEnumerable<AdminResponseDTO>>(await _adminService.GetAll()));
+            var admins = await _adminService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Admin?>, IEnumerable<AdminResponseDTO>>(admins));
         }
 
-
-        [HttpDelete("deleteAdmin/{id}")]
-        public async Task<IActionResult> DeleteAdmin(int id)
-        {
-            var admin = await _adminService.GetById(id);
-
-            await _adminService.RemoveAdmin(admin);
-
-            return Ok(admin);
-        }
-
-
-        [HttpGet("getAdminById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetAdmin))]
         public async Task<IActionResult> GetAdmin(int id)
         {
             var admin = await _adminService.GetById(id);
-
             return Ok(_mapper.Map<Admin, AdminResponseDTO>(admin));
         }
 
@@ -49,8 +37,16 @@ namespace StudentApplication.Controllers
         public async Task<IActionResult> CreateAdmin([FromBody] AdminRequestDTO admin)
         {
             await _adminService.CreateAdmin(admin);
+            var created = (await _adminService.GetAll()).First(a => a!.Username == admin.Username)!;
+            return CreatedAtAction(nameof(GetAdmin), new { id = created.Id }, _mapper.Map<Admin, AdminResponseDTO>(created));
+        }
 
-            return Ok(admin);
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAdmin(int id)
+        {
+            var admin = await _adminService.GetById(id);
+            await _adminService.RemoveAdmin(admin);
+            return NoContent();
         }
     }
 }

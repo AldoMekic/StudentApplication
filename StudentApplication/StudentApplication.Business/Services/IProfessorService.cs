@@ -20,6 +20,6 @@ namespace StudentApplication.Business.Services
 
         Task AddSubjectToProfessor(int professorId, int subjectId);
         Task<List<Subject>> GetProfessorSubjects(int professorId);
-        Task RemoveProfessorSubject(int professorId, int subjectId);
+        Task ReassignProfessorSubject(int subjectId, int newProfessorId);
     }
 }

@@ -10,10 +10,10 @@ namespace StudentApplication.Business.Services
 {
     public interface IUserService
     {
-        Task CreateUser(UserRequestDTO model);
+        Task CreateUser(UserRegisterRequestDTO model);
         Task<IEnumerable<User?>> GetAll();
         Task<User> GetById(int id);
-        Task<User> GetByUsername(string name);
+        Task<User?> GetByUsername(string name);
         Task RemoveUser(User user);
         Task UpdateUser(User user);
     }

@@ -19,29 +19,17 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllDepartments")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Department?>, IEnumerable<DepartmentResponseDTO>>(await _departmentService.GetAll()));
+            var deps = await _departmentService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Department?>, IEnumerable<DepartmentResponseDTO>>(deps));
         }
 
-
-        [HttpDelete("deleteDepartment/{id}")]
-        public async Task<IActionResult> DeleteDepartment(int id)
-        {
-            var department = await _departmentService.GetById(id);
-
-            await _departmentService.RemoveDepartment(department);
-
-            return Ok(department);
-        }
-
-
-        [HttpGet("getDepartmentById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetDepartment))]
         public async Task<IActionResult> GetDepartment(int id)
         {
             var department = await _departmentService.GetById(id);
-
             return Ok(_mapper.Map<Department, DepartmentResponseDTO>(department));
         }
 
@@ -49,8 +37,16 @@ namespace StudentApplication.Controllers
         public async Task<IActionResult> CreateDepartment([FromBody] DepartmentRequestDTO department)
         {
             await _departmentService.CreateDepartment(department);
+            var created = (await _departmentService.GetAll()).First(d => d!.Name == department.Name)!;
+            return CreatedAtAction(nameof(GetDepartment), new { id = created.Id }, _mapper.Map<Department, DepartmentResponseDTO>(created));
+        }
 
-            return Ok(department);
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteDepartment(int id)
+        {
+            var department = await _departmentService.GetById(id);
+            await _departmentService.RemoveDepartment(department);
+            return NoContent();
         }
     }
 }

@@ -15,7 +15,11 @@ namespace StudentApplication.Business.MappingProfiles
         public StudentMappingProfile()
         {
             CreateMap<StudentRequestDTO, Student>();
-            CreateMap<Student, StudentResponseDTO>();
+
+            CreateMap<Student, StudentResponseDTO>()
+                .ForMember(d => d.Department, opt => opt.MapFrom(s => s.Department))
+                .ForMember(d => d.Enrollments, opt => opt.MapFrom(s => s.Enrollments))
+                .ForMember(d => d.Grades, opt => opt.MapFrom(s => s.Grades));
         }
     }
 }

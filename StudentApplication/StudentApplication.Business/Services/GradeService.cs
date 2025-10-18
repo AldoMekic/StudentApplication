@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data;
 using StudentApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentApplication.Business.Services
 {
@@ -21,29 +16,41 @@ namespace StudentApplication.Business.Services
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
-        public async Task CreateGrade(GradeRequestDTO model)
-        {
-            var grade = _mapper.Map<Grade>(model);
 
+        public async Task<Grade> CreateGrade(GradeRequestDTO model)
+        {
+            // Ensure enrollment exists
+            var enrollment = await _databaseContext.Enrollments
+                .Include(e => e.Grade)
+                .FirstOrDefaultAsync(e => e.Id == model.EnrollmentId);
+
+            if (enrollment == null) throw new KeyNotFoundException("Enrollment not found");
+            if (enrollment.Grade != null) throw new InvalidOperationException("This enrollment already has a grade.");
+
+            var grade = _mapper.Map<Grade>(model);
             await _databaseContext.Grades.AddAsync(grade);
             await _databaseContext.SaveChangesAsync();
+
+            // Optional: keep Student.Grades in sync (read model)
+            var student = await _databaseContext.Students.FirstOrDefaultAsync(s => s.Id == enrollment.StudentId);
+            if (student != null)
+            {
+                student.Grades.Add(grade);
+                await _databaseContext.SaveChangesAsync();
+            }
+
+            return grade;
         }
 
         public async Task<IEnumerable<Grade?>> GetAll()
         {
-            var fromDb = await _databaseContext.Grades.ToListAsync();
-            return fromDb;
+            return await _databaseContext.Grades.AsNoTracking().ToListAsync();
         }
 
         public async Task<Grade> GetById(int id)
         {
-            var result = await _databaseContext.Grades.Where(l => l.Id == id).FirstOrDefaultAsync();
-
-            if (result == null)
-            {
-                throw new Exception("Grade not found");
-            }
-
+            var result = await _databaseContext.Grades.FirstOrDefaultAsync(l => l.Id == id);
+            if (result == null) throw new KeyNotFoundException("Grade not found");
             return result;
         }
 

@@ -14,7 +14,11 @@ namespace StudentApplication.Business.MappingProfiles
         public EnrollmentMappingProfile()
         {
             CreateMap<EnrollmentRequestDTO, Enrollment>();
-            CreateMap<Enrollment, EnrollmentResponseDTO>();
+
+            CreateMap<Enrollment, EnrollmentResponseDTO>()
+                .ForMember(d => d.Subject, opt => opt.MapFrom(s => s.Subject))
+                .ForMember(d => d.Grade, opt => opt.MapFrom(s => s.Grade))
+                .ForMember(d => d.Status, opt => opt.MapFrom(s => (EnrollmentStatusDTO)s.Status));
         }
     }
 }

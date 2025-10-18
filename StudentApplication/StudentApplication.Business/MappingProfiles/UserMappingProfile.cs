@@ -13,9 +13,9 @@ namespace StudentApplication.Business.MappingProfiles
     {
         public UserMappingProfile()
         {
-            CreateMap<User, UserResponseDTO>();
-            CreateMap<UserRequestDTO, User>();
-            CreateMap<UserLoginRequestDTO, User>();
+            CreateMap<UserRegisterRequestDTO, User>();
+            CreateMap<User, UserResponseDTO>()
+                .ForSourceMember(s => s.Password, opt => opt.DoNotValidate());
         }
     }
 }

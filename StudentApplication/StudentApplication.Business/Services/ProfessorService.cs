@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data;
 using StudentApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentApplication.Business.Services
 {
@@ -24,92 +19,89 @@ namespace StudentApplication.Business.Services
 
         public async Task AddSubjectToProfessor(int professorId, int subjectId)
         {
-            var professor = await _databaseContext.Professors.Where(u => u.Id == professorId).FirstOrDefaultAsync();
+            var subject = await _databaseContext.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
+            if (subject == null) throw new KeyNotFoundException("Subject not found");
 
-            var subject = await _databaseContext.Subjects.Where(r => r.Id == subjectId).FirstOrDefaultAsync();
+            var professor = await _databaseContext.Professors.FirstOrDefaultAsync(p => p.Id == professorId);
+            if (professor == null) throw new KeyNotFoundException("Professor not found");
 
-            if (professor == null)
-                throw new Exception("Professor not found");
-            if (subject == null)
-                throw new Exception("Subject not found");
+            subject.ProfessorId = professorId; // authoritative FK update
+            await _databaseContext.SaveChangesAsync();
+        }
 
-            professor.Subjects.Add(subject);
+        public async Task ReassignProfessorSubject(int subjectId, int newProfessorId)
+        {
+            var subject = await _databaseContext.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
+            if (subject == null) throw new KeyNotFoundException("Subject not found");
 
+            var newProf = await _databaseContext.Professors.FirstOrDefaultAsync(p => p.Id == newProfessorId);
+            if (newProf == null) throw new KeyNotFoundException("Professor not found");
+
+            subject.ProfessorId = newProfessorId;
             await _databaseContext.SaveChangesAsync();
         }
 
         public async Task CreateProfessor(ProfessorRequestDTO model)
         {
             var professor = _mapper.Map<Professor>(model);
-
             await _databaseContext.Professors.AddAsync(professor);
             await _databaseContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Professor?>> GetAll()
         {
-            var fromDb = await _databaseContext.Professors.Include(p => p.Subjects).ToListAsync();
-            return fromDb;
+            return await _databaseContext.Professors
+                .AsNoTracking()
+                .Include(p => p.Subjects)
+                .Include(p => p.Department)
+                .ToListAsync();
         }
 
         public async Task<Professor> GetById(int id)
         {
-            var result = await _databaseContext.Professors.Where(l => l.Id == id).Include(p => p.Subjects).FirstOrDefaultAsync();
+            var result = await _databaseContext.Professors
+                .Include(p => p.Subjects)
+                .Include(p => p.Department)
+                .FirstOrDefaultAsync(l => l.Id == id);
 
-            if (result == null)
-            {
-                throw new Exception("Professor not found");
-            }
-
+            if (result == null) throw new KeyNotFoundException("Professor not found");
             return result;
         }
 
         public async Task<Professor> GetByName(string name)
         {
-            var result = await _databaseContext.Professors.Where(a => a.FirstName == name).Include(p => p.Subjects).FirstOrDefaultAsync();
+            var result = await _databaseContext.Professors
+                .Include(p => p.Subjects)
+                .Include(p => p.Department)
+                .FirstOrDefaultAsync(a => a.FirstName == name);
 
-            if (result == null)
-            {
-                throw new Exception("Professor not found");
-            }
-
+            if (result == null) throw new KeyNotFoundException("Professor not found");
             return result;
         }
 
         public async Task<Professor> GetFirst()
         {
-            var result = await _databaseContext.Professors.Include(p => p.Subjects).FirstOrDefaultAsync();
-            if (result == null)
-                throw new Exception("No professors in database");
+            var result = await _databaseContext.Professors
+                .Include(p => p.Subjects)
+                .Include(p => p.Department)
+                .FirstOrDefaultAsync();
+            if (result == null) throw new InvalidOperationException("No professors in database");
             return result;
         }
 
         public async Task<List<Subject>> GetProfessorSubjects(int professorId)
         {
-            var professor = await _databaseContext.Professors.Where(s => s.Id == professorId).Include(s => s.Subjects).FirstOrDefaultAsync();
+            var professor = await _databaseContext.Professors
+                .Include(s => s.Subjects)
+                .FirstOrDefaultAsync(s => s.Id == professorId);
 
+            if (professor == null) throw new KeyNotFoundException("Professor not found");
             return professor.Subjects;
         }
 
         public async Task RemoveProfessor(Professor professor)
         {
             _databaseContext.Professors.Remove(professor);
-            await _databaseContext.SaveChangesAsync();
-        }
-
-        public async Task RemoveProfessorSubject(int professorId, int subjectId)
-        {
-            var professor = await _databaseContext.Professors.Where(st => st.Id == professorId).Include(st => st.Subjects).FirstOrDefaultAsync();
-
-            var subject = await _databaseContext.Subjects.Where(su => su.Id == subjectId).FirstOrDefaultAsync();
-
-            if (professor == null)
-                throw new Exception("Professor not found");
-            if (subject == null)
-                throw new Exception("Subject not found");
-
-            professor.Subjects.Remove(subject);
-
             await _databaseContext.SaveChangesAsync();
         }
 

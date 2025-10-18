@@ -37,6 +37,9 @@ namespace StudentApplication.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Admins");
                 });
 
@@ -55,6 +58,9 @@ namespace StudentApplication.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Departments");
                 });
 
@@ -70,7 +76,9 @@ namespace StudentApplication.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("EnrolledAt")
-                        .HasColumnType("datetimeoffset");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -83,9 +91,10 @@ namespace StudentApplication.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
-
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("StudentId", "SubjectId")
+                        .IsUnique();
 
                     b.ToTable("Enrollments");
                 });
@@ -99,7 +108,9 @@ namespace StudentApplication.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTimeOffset>("AssignedAt")
-                        .HasColumnType("datetimeoffset");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<int>("EnrollmentId")
                         .HasColumnType("int");
@@ -107,13 +118,10 @@ namespace StudentApplication.Data.Migrations
                     b.Property<int>("OfficialGrade")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProfessorId")
+                    b.Property<int?>("ProfessorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<float>("TotalScore")
@@ -127,8 +135,6 @@ namespace StudentApplication.Data.Migrations
                     b.HasIndex("ProfessorId");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("Grades");
                 });
@@ -265,7 +271,8 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
 
                     b.Property<bool>("IsProfessor")
                         .HasColumnType("bit");
@@ -279,7 +286,8 @@ namespace StudentApplication.Data.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -319,31 +327,15 @@ namespace StudentApplication.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudentApplication.Data.Models.Professor", "Professor")
+                    b.HasOne("StudentApplication.Data.Models.Professor", null)
                         .WithMany("GivenGrades")
-                        .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ProfessorId");
 
-                    b.HasOne("StudentApplication.Data.Models.Student", "Student")
+                    b.HasOne("StudentApplication.Data.Models.Student", null)
                         .WithMany("Grades")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("StudentApplication.Data.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Enrollment");
-
-                    b.Navigation("Professor");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("StudentApplication.Data.Models.Professor", b =>

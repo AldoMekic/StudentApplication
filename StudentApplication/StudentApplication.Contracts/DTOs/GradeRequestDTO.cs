@@ -8,8 +8,8 @@ namespace StudentApplication.Contracts.DTOs
 {
     public class GradeRequestDTO
     {
+        public int EnrollmentId { get; set; }
         public int OfficialGrade { get; set; }
         public float TotalScore { get; set; }
-        public int StudentId { get; set; }
     }
 }

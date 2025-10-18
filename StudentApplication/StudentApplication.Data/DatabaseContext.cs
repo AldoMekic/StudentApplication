@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentApplication.Data
 {
@@ -20,29 +15,37 @@ namespace StudentApplication.Data
         public DbSet<Enrollment> Enrollments { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
-
         public DatabaseContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // USERS
             modelBuilder.Entity<User>(b =>
             {
                 b.HasIndex(u => u.Email).IsUnique();
                 b.HasIndex(u => u.Username).IsUnique();
+                b.Property(u => u.Email).HasMaxLength(254).IsRequired();
+                b.Property(u => u.Username).HasMaxLength(100).IsRequired();
+                b.Property(u => u.Password).IsRequired();
             });
 
+            // DEPARTMENTS
             modelBuilder.Entity<Department>(b =>
             {
                 b.Property(d => d.Name).IsRequired().HasMaxLength(200);
+                b.HasIndex(d => d.Name).IsUnique();
             });
 
+            // ADMINS
             modelBuilder.Entity<Admin>(b =>
             {
                 b.Property(a => a.Username).IsRequired().HasMaxLength(100);
+                b.HasIndex(a => a.Username).IsUnique();
             });
 
+            // STUDENTS
             modelBuilder.Entity<Student>(b =>
             {
                 b.Property(s => s.FirstName).IsRequired().HasMaxLength(100);
@@ -59,6 +62,7 @@ namespace StudentApplication.Data
                  .OnDelete(DeleteBehavior.SetNull);
             });
 
+            // PROFESSORS
             modelBuilder.Entity<Professor>(b =>
             {
                 b.Property(p => p.FirstName).IsRequired().HasMaxLength(100);
@@ -81,6 +85,7 @@ namespace StudentApplication.Data
                  .OnDelete(DeleteBehavior.SetNull);
             });
 
+            // SUBJECTS
             modelBuilder.Entity<Subject>(b =>
             {
                 b.Property(s => s.Title).IsRequired().HasMaxLength(200);
@@ -92,8 +97,10 @@ namespace StudentApplication.Data
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
+            // ENROLLMENTS
             modelBuilder.Entity<Enrollment>(b =>
             {
+                b.Property(e => e.EnrolledAt).HasDefaultValueSql("GETUTCDATE()");
                 b.HasOne(e => e.Student)
                  .WithMany(s => s.Enrollments)
                  .HasForeignKey(e => e.StudentId)
@@ -108,24 +115,16 @@ namespace StudentApplication.Data
                  .WithOne(g => g.Enrollment)
                  .HasForeignKey<Grade>(g => g.EnrollmentId)
                  .OnDelete(DeleteBehavior.Cascade);
+
+                // A student can enroll a given subject only once
+                b.HasIndex(e => new { e.StudentId, e.SubjectId }).IsUnique();
             });
 
+            // GRADES (simplified: rely only on EnrollmentId)
             modelBuilder.Entity<Grade>(b =>
             {
-                b.HasOne(g => g.Professor)
-                 .WithMany(p => p.GivenGrades)
-                 .HasForeignKey(g => g.ProfessorId)
-                 .OnDelete(DeleteBehavior.NoAction);
-
-                b.HasOne(g => g.Subject)
-                 .WithMany()
-                 .HasForeignKey(g => g.SubjectId)
-                 .OnDelete(DeleteBehavior.NoAction);
-
-                b.HasOne(g => g.Student)
-                 .WithMany(s => s.Grades)
-                 .HasForeignKey(g => g.StudentId)
-                 .OnDelete(DeleteBehavior.NoAction);
+                b.Property(g => g.AssignedAt).HasDefaultValueSql("GETUTCDATE()");
+                // No direct FKs to Student/Professor/Subject to avoid drift
             });
         }
     }

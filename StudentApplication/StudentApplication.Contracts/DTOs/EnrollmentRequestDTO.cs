@@ -8,7 +8,7 @@ namespace StudentApplication.Contracts.DTOs
 {
     public class EnrollmentRequestDTO
     {
-        public string StudentEnrolled { get; set; }
-        public string SubjectEnrolled { get; set; }
+        public int StudentId { get; set; }
+        public int SubjectId { get; set; }
     }
 }

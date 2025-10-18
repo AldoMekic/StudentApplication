@@ -12,8 +12,10 @@ namespace StudentApplication.Contracts.DTOs
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
+        public int? DepartmentId { get; set; }
+        public DepartmentResponseDTO? Department { get; set; }
 
-        public List<SubjectResponseDTO> Subjects { get; set; }
+        public List<EnrollmentResponseDTO> Enrollments { get; set; } = new List<EnrollmentResponseDTO>();
 
         public List<GradeResponseDTO> Grades { get; set; }
     }

@@ -14,7 +14,10 @@ namespace StudentApplication.Business.MappingProfiles
         public ProfessorMappingProfile()
         {
             CreateMap<ProfessorRequestDTO, Professor>();
-            CreateMap<Professor, ProfessorResponseDTO>();
+
+            CreateMap<Professor, ProfessorResponseDTO>()
+                .ForMember(d => d.Department, opt => opt.MapFrom(s => s.Department))
+                .ForMember(d => d.Subjects, opt => opt.MapFrom(s => s.Subjects));
         }
     }
 }

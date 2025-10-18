@@ -19,37 +19,24 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllSubjects")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Subject?>, IEnumerable<SubjectResponseDTO>>(await _subjectService.GetAll()));
+            var subjects = await _subjectService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Subject?>, IEnumerable<SubjectResponseDTO>>(subjects));
         }
 
-
-        [HttpDelete("deleteSubject/{id}")]
-        public async Task<IActionResult> DeleteSubject(int id)
-        {
-            var subject = await _subjectService.GetById(id);
-
-            await _subjectService.RemoveSubject(subject);
-
-            return Ok(subject);
-        }
-
-
-        [HttpGet("getSubjectById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetSubject))]
         public async Task<IActionResult> GetSubject(int id)
         {
             var subject = await _subjectService.GetById(id);
-
             return Ok(_mapper.Map<Subject, SubjectResponseDTO>(subject));
         }
 
-        [HttpGet("getSubjectByName/{name}")]
+        [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetSubjectByName(string name)
         {
             var subject = await _subjectService.GetByName(name);
-
             return Ok(_mapper.Map<Subject, SubjectResponseDTO>(subject));
         }
 
@@ -57,8 +44,16 @@ namespace StudentApplication.Controllers
         public async Task<IActionResult> CreateSubject([FromBody] SubjectRequestDTO subject)
         {
             await _subjectService.CreateSubject(subject);
+            var created = await _subjectService.GetByName(subject.Title);
+            return CreatedAtAction(nameof(GetSubject), new { id = created.Id }, _mapper.Map<Subject, SubjectResponseDTO>(created));
+        }
 
-            return Ok(subject);
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteSubject(int id)
+        {
+            var subject = await _subjectService.GetById(id);
+            await _subjectService.RemoveSubject(subject);
+            return NoContent();
         }
     }
 }

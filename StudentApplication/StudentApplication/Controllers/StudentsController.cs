@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentApplication.Business.Services;
 using StudentApplication.Contracts.DTOs;
@@ -20,37 +19,24 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllStudents")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Student?>, IEnumerable<StudentResponseDTO>>(await _studentService.GetAll()));
+            var all = await _studentService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Student?>, IEnumerable<StudentResponseDTO>>(all));
         }
 
-
-        [HttpDelete("deleteStudent/{id}")]
-        public async Task<IActionResult> DeleteStudent(int id)
-        {
-            var student = await _studentService.GetById(id);
-
-            await _studentService.RemoveStudent(student);
-
-            return Ok(student);
-        }
-
-
-        [HttpGet("getStudentById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetStudent))]
         public async Task<IActionResult> GetStudent(int id)
         {
             var student = await _studentService.GetById(id);
-
             return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
         }
 
-        [HttpGet("getStudentByName/{name}")]
+        [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetStudentByName(string name)
         {
             var student = await _studentService.GetByName(name);
-
             return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
         }
 
@@ -58,60 +44,58 @@ namespace StudentApplication.Controllers
         public async Task<IActionResult> CreateStudent([FromBody] StudentRequestDTO student)
         {
             await _studentService.CreateStudent(student);
-
-            return Ok(student);
+            var created = await _studentService.GetFirst(); // simple way; replace with freshly created fetch if needed
+            return CreatedAtAction(nameof(GetStudent), new { id = created.Id }, _mapper.Map<Student, StudentResponseDTO>(created));
         }
 
-        [HttpPost("addSubjectToStudent/{studentId}/{subjectId}")]
+        // === Subject flows via Enrollments (mirrors your previous commented design) ===
+
+        [HttpPost("{studentId:int}/subjects/{subjectId:int}")]
         public async Task<IActionResult> AddSubjectToStudent(int studentId, int subjectId)
         {
-            await _studentService.AddSubjectToStudent(studentId, subjectId);
+            await _studentService.EnrollStudentInSubject(studentId, subjectId);
             var student = await _studentService.GetById(studentId);
-
             return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
         }
 
-        [HttpGet("getStudentSubjects/{studentId}")]
-        public async Task<IActionResult> GetAllSubjects(int studentId)
+        [HttpGet("{studentId:int}/subjects")]
+        public async Task<IActionResult> GetStudentSubjects(int studentId)
         {
             var subjects = await _studentService.GetStudentSubjects(studentId);
             var dto = _mapper.Map<List<SubjectResponseDTO>>(subjects);
-
             return Ok(dto);
         }
 
-        [HttpDelete("removeStudentSubject/{studentId}/{subjectId}")]
+        [HttpDelete("{studentId:int}/subjects/{subjectId:int}")]
         public async Task<IActionResult> RemoveStudentSubject(int studentId, int subjectId)
         {
-            await _studentService.RemoveStudentSubject(studentId, subjectId);
-
-            return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
+            await _studentService.UnenrollStudentFromSubject(studentId, subjectId);
+            return NoContent();
         }
 
-        //[HttpPost("addGradeToStudent/{studentId}/{gradeId}")]
-        //public async Task<IActionResult> AddGradeToStudent(int studentId, int gradeId)
-        //{
-        //    await _studentService.AddGradeToStudent(studentId, gradeId);
-        //    var student = await _studentService.GetById(studentId);
+        // === Grades listing/removal for a student ===
 
-        //    return Ok(_mapper.Map<Student, StudentResponseDTO>(student));
-        //}
-
-        [HttpGet("getStudentGrades/{studentId}")]
+        [HttpGet("{studentId:int}/grades")]
         public async Task<IActionResult> GetAllGrades(int studentId)
         {
             var grades = await _studentService.GetStudentGrades(studentId);
             var dto = _mapper.Map<List<GradeResponseDTO>>(grades);
-
             return Ok(dto);
         }
 
-        [HttpDelete("removeStudentGrade/{studentId}/{gradeId}")]
+        [HttpDelete("{studentId:int}/grades/{gradeId:int}")]
         public async Task<IActionResult> RemoveStudentGrade(int studentId, int gradeId)
         {
             await _studentService.RemoveStudentGrade(studentId, gradeId);
+            return NoContent();
+        }
 
-            return Ok(_mapper.Map<Student, StudentResponseDTO>(await _studentService.GetById(studentId)));
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = await _studentService.GetById(id);
+            await _studentService.RemoveStudent(student);
+            return NoContent();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace StudentApplication.Business.Services
 {
     public interface IGradeService
     {
-        Task CreateGrade(GradeRequestDTO model);
+        Task<Grade> CreateGrade(GradeRequestDTO model);
         Task<IEnumerable<Grade?>> GetAll();
         Task<Grade> GetById(int id);
         Task RemoveGrade(Grade grade);

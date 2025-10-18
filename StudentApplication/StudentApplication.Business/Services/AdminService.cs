@@ -3,12 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data;
 using StudentApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentApplication.Business.Services
 {
@@ -22,29 +16,26 @@ namespace StudentApplication.Business.Services
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
+
         public async Task CreateAdmin(AdminRequestDTO model)
         {
-            var admin = _mapper.Map<Admin>(model);
+            if (await _databaseContext.Admins.AnyAsync(a => a.Username == model.Username))
+                throw new InvalidOperationException("Admin username must be unique.");
 
+            var admin = _mapper.Map<Admin>(model);
             await _databaseContext.Admins.AddAsync(admin);
             await _databaseContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Admin?>> GetAll()
         {
-            var fromDb = await _databaseContext.Admins.ToListAsync();
-            return fromDb;
+            return await _databaseContext.Admins.AsNoTracking().ToListAsync();
         }
 
         public async Task<Admin> GetById(int id)
         {
-            var result = await _databaseContext.Admins.Where(l => l.Id == id).FirstOrDefaultAsync();
-
-            if (result == null)
-            {
-                throw new Exception("Admin not found");
-            }
-
+            var result = await _databaseContext.Admins.FirstOrDefaultAsync(l => l.Id == id);
+            if (result == null) throw new KeyNotFoundException("Admin not found");
             return result;
         }
 

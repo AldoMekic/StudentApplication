@@ -19,37 +19,24 @@ namespace StudentApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAllProfessors")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<Professor?>, IEnumerable<ProfessorResponseDTO>>(await _professorService.GetAll()));
+            var profs = await _professorService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<Professor?>, IEnumerable<ProfessorResponseDTO>>(profs));
         }
 
-
-        [HttpDelete("deleteProfessor/{id}")]
-        public async Task<IActionResult> DeleteProfessor(int id)
-        {
-            var professor = await _professorService.GetById(id);
-
-            await _professorService.RemoveProfessor(professor);
-
-            return Ok(professor);
-        }
-
-
-        [HttpGet("getProfessorById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetProfessor))]
         public async Task<IActionResult> GetProfessor(int id)
         {
             var professor = await _professorService.GetById(id);
-
             return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
         }
 
-        [HttpGet("getProfessorByName/{name}")]
+        [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetProfessorByName(string name)
         {
             var professor = await _professorService.GetByName(name);
-
             return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
         }
 
@@ -57,34 +44,41 @@ namespace StudentApplication.Controllers
         public async Task<IActionResult> CreateProfessor([FromBody] ProfessorRequestDTO professor)
         {
             await _professorService.CreateProfessor(professor);
-
-            return Ok(professor);
+            var created = await _professorService.GetFirst(); // simplest way to fetch; replace with GetByName if needed
+            return CreatedAtAction(nameof(GetProfessor), new { id = created.Id }, _mapper.Map<Professor, ProfessorResponseDTO>(created));
         }
 
-        //[HttpPost("addSubjectToProfessor/{professorId}/{subjectId}")]
-        //public async Task<IActionResult> AddSubjectToProfessor(int professorId, int subjectId)
-        //{
-        //    await _professorService.AddSubjectToProfessor(professorId, subjectId);
-        //    var professor = await _professorService.GetById(professorId);
+        // Assign or reassign subject to professor
+        [HttpPut("{professorId:int}/subjects/{subjectId:int}")]
+        public async Task<IActionResult> AssignSubjectToProfessor(int professorId, int subjectId)
+        {
+            await _professorService.AddSubjectToProfessor(professorId, subjectId);
+            var professor = await _professorService.GetById(professorId);
+            return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
+        }
 
-        //    return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
-        //}
+        [HttpPut("reassign-subject/{subjectId:int}/to/{newProfessorId:int}")]
+        public async Task<IActionResult> ReassignProfessorSubject(int subjectId, int newProfessorId)
+        {
+            await _professorService.ReassignProfessorSubject(subjectId, newProfessorId);
+            var professor = await _professorService.GetById(newProfessorId);
+            return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(professor));
+        }
 
-        [HttpGet("getProfessorSubjects/{professorId}")]
+        [HttpGet("{professorId:int}/subjects")]
         public async Task<IActionResult> GetAllSubjects(int professorId)
         {
             var subjects = await _professorService.GetProfessorSubjects(professorId);
             var dto = _mapper.Map<List<SubjectResponseDTO>>(subjects);
-
             return Ok(dto);
         }
 
-        [HttpDelete("removeProfessorSubject/{professorId}/{subjectId}")]
-        public async Task<IActionResult> RemoveProfessorSubject(int professorId, int subjectId)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteProfessor(int id)
         {
-            await _professorService.RemoveProfessorSubject(professorId, subjectId);
-
-            return Ok(_mapper.Map<Professor, ProfessorResponseDTO>(await _professorService.GetById(professorId)));
+            var professor = await _professorService.GetById(id);
+            await _professorService.RemoveProfessor(professor);
+            return NoContent();
         }
     }
 }

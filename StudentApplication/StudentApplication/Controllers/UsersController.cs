@@ -12,7 +12,7 @@ using System.Text;
 namespace StudentApplication.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -26,68 +26,60 @@ namespace StudentApplication.Controllers
             _config = config;
         }
 
-        //[Authorize]
-        [HttpGet("getAllUsers")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<User?>, IEnumerable<UserResponseDTO>>(await _userService.GetAll()));
+            var users = await _userService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<User>, IEnumerable<UserResponseDTO>>(users!));
         }
 
-        [HttpDelete("deleteUser/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _userService.GetById(id);
-
-            await _userService.RemoveUser(user);
-
-            return Ok(user.Id);
-        }
-
-        [HttpGet("getUserById/{id}")]
+        [HttpGet("{id:int}", Name = nameof(GetUser))]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetById(id);
-
             return Ok(_mapper.Map<User, UserResponseDTO>(user));
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserRequestDTO request)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _userService.GetByUsername(request.Username);
+            var user = await _userService.GetById(id);
+            await _userService.RemoveUser(user);
+            return NoContent();
+        }
 
-            if (user != null)
-            {
-                return BadRequest($"The username {request.Username} is already taken");
-            }
-
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequestDTO request)
+        {
             await _userService.CreateUser(request);
-            var newUser = await _userService.GetByUsername(request.Username);
+            var created = await _userService.GetByUsername(request.Username);
 
-
-            return Ok(newUser);
+            return CreatedAtAction(nameof(GetUser), new { id = created!.Id }, _mapper.Map<User, UserResponseDTO>(created));
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginRequestDTO login)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestDTO login, [FromServices] IUserService users)
         {
-            var user = await _userService.GetByUsername(login.Username);
+            var user = await users.GetByUsername(login.Username);
+            if (user == null) return Unauthorized(); // user not found
 
-            if (user != null)
-            {
-                var tokenString = GenerateJSONWebToken(user);
-                return Ok(new { token = tokenString });
-            }
+            // NOTE: demo hashing must match UserService.Hash scheme
+            var incomingHash = Hash(login.Password);
+            if (!string.Equals(user.Password, incomingHash, StringComparison.OrdinalIgnoreCase))
+                return Unauthorized();
 
-            return Unauthorized();
+            var tokenString = GenerateJSONWebToken(user);
+            return Ok(new { token = tokenString });
         }
+
         private string GenerateJSONWebToken(User userInfo)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[] {
+            var claims = new[]
+            {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
                 new Claim("is_student", userInfo.IsStudent.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
@@ -95,11 +87,21 @@ namespace StudentApplication.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var token = new JwtSecurityToken(null, null, claims, expires: DateTime.UtcNow.AddMinutes(120), signingCredentials: credentials);
+            var token = new JwtSecurityToken(
+                issuer: null,
+                audience: null,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(120),
+                signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
+        private static string Hash(string input)
+        {
+            using var sha = System.Security.Cryptography.SHA256.Create();
+            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return Convert.ToHexString(bytes);
+        }
     }
 }

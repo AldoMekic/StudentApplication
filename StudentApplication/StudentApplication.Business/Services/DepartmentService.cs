@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data;
 using StudentApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentApplication.Business.Services
 {
@@ -21,28 +16,26 @@ namespace StudentApplication.Business.Services
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
+
         public async Task CreateDepartment(DepartmentRequestDTO model)
         {
-            var department = _mapper.Map<Department>(model);
+            if (await _databaseContext.Departments.AnyAsync(d => d.Name == model.Name))
+                throw new InvalidOperationException("Department name must be unique.");
 
+            var department = _mapper.Map<Department>(model);
             await _databaseContext.Departments.AddAsync(department);
             await _databaseContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Department?>> GetAll()
         {
-            var fromDb = await _databaseContext.Departments.ToListAsync();
-            return fromDb;
+            return await _databaseContext.Departments.AsNoTracking().ToListAsync();
         }
 
         public async Task<Department> GetById(int id)
         {
-            var result = await _databaseContext.Departments.Where(l => l.Id == id).FirstOrDefaultAsync();
-
-            if (result == null)
-            {
-                throw new Exception("Department not found");
-            }
+            var result = await _databaseContext.Departments.FirstOrDefaultAsync(l => l.Id == id);
+            if (result == null) throw new KeyNotFoundException("Department not found");
 
             return result;
         }
