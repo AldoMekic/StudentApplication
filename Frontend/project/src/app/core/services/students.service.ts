@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom, map, Observable } from 'rxjs';
 import { API_BASE } from './api.config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 
 export interface StudentResponseDTO {
   id: number;
@@ -38,46 +38,40 @@ export interface GradeResponseDTO {
   annulment_requested?: boolean;
 }
 
+function unwrap<T>(obs: Observable<HttpEvent<T>>): Promise<T> {
+  return firstValueFrom(
+    obs.pipe(
+      filter((e): e is HttpResponse<T> => e instanceof HttpResponse),
+      map(res => res.body as T)
+    )
+  );
+}
+
 @Injectable({ providedIn: 'root' })
 export class StudentsService {
-  private base = API_BASE + 'api/students/';
-
-  constructor(private http: HttpClient) {}
+  constructor(private api: ApiService) {}
 
   async getAll(): Promise<StudentResponseDTO[]> {
-    return await firstValueFrom(this.http.get<StudentResponseDTO[]>(this.base + 'getAllStudents'));
+    return await unwrap(this.api.get<StudentResponseDTO[]>('api/students'));
   }
 
-   async getById(id: number): Promise<StudentResponseDTO> {
-    return await firstValueFrom(this.http.get<StudentResponseDTO>(this.base + `getStudentById/${id}`));
+  async getById(id: number): Promise<StudentResponseDTO> {
+    return await unwrap(this.api.get<StudentResponseDTO>(`api/students/${id}`));
   }
 
   async getStudentSubjects(studentId: number): Promise<SubjectResponseDTO[]> {
-    return await firstValueFrom(
-      this.http.get<SubjectResponseDTO[]>(this.base + `getStudentSubjects/${studentId}`)
-    );
+    return await unwrap(this.api.get<SubjectResponseDTO[]>(`api/students/${studentId}/subjects`));
   }
 
   async getStudentGrades(studentId: number): Promise<GradeResponseDTO[]> {
-    return await firstValueFrom(
-      this.http.get<GradeResponseDTO[]>(this.base + `getStudentGrades/${studentId}`)
-    );
+    return await unwrap(this.api.get<GradeResponseDTO[]>(`api/students/${studentId}/grades`));
   }
 
   async addSubjectToStudent(studentId: number, subjectId: number): Promise<void> {
-    // POST api/students/addSubjectsToStudent with body { studentId, subjectIds:[subjectId] }
-    await firstValueFrom(
-      this.http.post<void>(this.base + 'addSubjectsToStudent', {
-        studentId,
-        subjectIds: [subjectId]
-      })
-    );
+    await unwrap(this.api.post<void>(`api/students/${studentId}/subjects/${subjectId}`, {}));
   }
 
   async removeStudentSubject(studentId: number, subjectId: number): Promise<void> {
-    // DELETE api/students/removeStudentSubject/{studentId}/{subjectId}
-    await firstValueFrom(
-      this.http.delete<void>(this.base + `removeStudentSubject/${studentId}/${subjectId}`)
-    );
+    await unwrap(this.api.delete<void>(`api/students/${studentId}/subjects/${subjectId}`));
   }
 }

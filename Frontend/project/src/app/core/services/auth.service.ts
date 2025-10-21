@@ -129,14 +129,14 @@ export class AuthService {
     };
 
     // POST /Users/register
-    return await this.api.post<any>('Users/register', payload).toPromise();
+    return await this.api.post<any>('api/users/register', payload).toPromise();
   }
 
-  async login(email: string, password: string) {
+  async login(username: string, password: string) {
   const result = await firstValueFrom(
     this.http.post<{ token: string }>(
-      API_BASE + 'api/auth/login',
-      { email, password }
+      API_BASE + 'api/users/login',
+      { username, password }
     )
   );
 
