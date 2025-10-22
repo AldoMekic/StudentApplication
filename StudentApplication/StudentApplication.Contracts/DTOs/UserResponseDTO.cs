@@ -14,5 +14,8 @@ namespace StudentApplication.Contracts.DTOs
         public string Password { get; set; }
         public bool IsStudent { get; set; }
         public bool IsProfessor { get; set; }
+
+        public bool IsApproved { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

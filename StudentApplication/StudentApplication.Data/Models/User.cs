@@ -15,6 +15,12 @@ namespace StudentApplication.Data.Models
         public bool IsStudent { get; set; }
         public bool IsProfessor { get; set; }
 
+        public bool IsApproved { get; set; }
+        public bool IsAdmin { get; set; }
+
+        public DateTime? ApprovedAt { get; set; }
+        public string? ApprovedByAdminName { get; set; }
+
         public Student StudentProfile { get; set; }
         public Professor ProfessorProfile { get; set; }
     }

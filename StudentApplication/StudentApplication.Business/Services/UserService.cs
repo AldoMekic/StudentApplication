@@ -12,6 +12,7 @@ namespace StudentApplication.Business.Services
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;
+
         public UserService(DatabaseContext context, IMapper mapper)
         {
             _context = context;
@@ -26,8 +27,22 @@ namespace StudentApplication.Business.Services
             if (await _context.Users.AnyAsync(u => u.Email == model.Email))
                 throw new InvalidOperationException("Email already in use.");
 
-            var user = _mapper.Map<User>(model);
-            user.Password = Hash(model.Password); // NOTE: for demo only; consider BCrypt/Argon2.
+            // Explicitly construct the User to control approval flags
+            var user = new User
+            {
+                Username = model.Username,
+                Email = model.Email,
+                Password = Hash(model.Password), // NOTE: demo hashing; consider BCrypt/Argon2 in real apps
+                IsStudent = model.IsStudent,
+                IsProfessor = model.IsProfessor,
+
+                // Approval rules:
+                // - Students: approved by default
+                // - Professors: require admin approval (IsApproved = false)
+                // - If a user is both (unlikely), treat student rule as "true"
+                IsApproved = model.IsStudent ? true : !model.IsProfessor,
+                IsAdmin = false
+            };
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -67,6 +82,30 @@ namespace StudentApplication.Business.Services
             using var sha = SHA256.Create();
             var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
             return Convert.ToHexString(bytes); // uppercase hex
+        }
+
+
+        public async Task<IReadOnlyList<User>> GetUnapprovedProfessors()
+        {
+            return await _context.Users
+                .AsNoTracking()
+                .Where(u => u.IsProfessor && !u.IsApproved)
+                .OrderBy(u => u.Username)
+                .ToListAsync();
+        }
+
+        public async Task ApproveProfessor(int userId, int approvedByAdminId, string approvedByAdminName)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) throw new KeyNotFoundException("User not found");
+            if (!user.IsProfessor) throw new InvalidOperationException("User is not a professor");
+
+            user.IsApproved = true;
+
+             user.ApprovedAt = DateTime.UtcNow;
+             user.ApprovedByAdminName = approvedByAdminName;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

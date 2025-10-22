@@ -64,10 +64,13 @@ namespace StudentApplication.Controllers
             var user = await users.GetByUsername(login.Username);
             if (user == null) return Unauthorized(); // user not found
 
-            // NOTE: demo hashing must match UserService.Hash scheme
             var incomingHash = Hash(login.Password);
             if (!string.Equals(user.Password, incomingHash, StringComparison.OrdinalIgnoreCase))
                 return Unauthorized();
+
+            // NEW: block unapproved professors
+            if (user.IsProfessor && !user.IsApproved)
+                return Unauthorized(new { message = "Professor account is not approved yet." });
 
             var tokenString = GenerateJSONWebToken(user);
             return Ok(new { token = tokenString });
@@ -84,6 +87,10 @@ namespace StudentApplication.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
                 new Claim("is_student", userInfo.IsStudent.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
                 new Claim("is_professor", userInfo.IsProfessor.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
+
+                new Claim("is_admin", userInfo.IsAdmin.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
+                new Claim("is_approved", userInfo.IsApproved.ToString().ToLowerInvariant(), ClaimValueTypes.Boolean),
+
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

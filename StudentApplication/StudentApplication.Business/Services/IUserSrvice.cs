@@ -16,5 +16,8 @@ namespace StudentApplication.Business.Services
         Task<User?> GetByUsername(string name);
         Task RemoveUser(User user);
         Task UpdateUser(User user);
+
+        Task<IReadOnlyList<User>> GetUnapprovedProfessors();
+        Task ApproveProfessor(int userId, int approvedByAdminId, string approvedByAdminName);
     }
 }

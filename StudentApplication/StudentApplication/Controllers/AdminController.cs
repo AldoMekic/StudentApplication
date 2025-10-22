@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentApplication.Business.Services;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data.Models;
+using System.Security.Claims;
 
 namespace StudentApplication.Controllers
 {
@@ -11,11 +13,13 @@ namespace StudentApplication.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public AdminController(IAdminService adminService, IMapper mapper)
+        public AdminController(IAdminService adminService, IUserService userService ,IMapper mapper)
         {
             _adminService = adminService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -46,6 +50,34 @@ namespace StudentApplication.Controllers
         {
             var admin = await _adminService.GetById(id);
             await _adminService.RemoveAdmin(admin);
+            return NoContent();
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpGet("pending-professors")]
+        public async Task<IActionResult> GetPendingProfessors()
+        {
+            var pending = await _userService.GetUnapprovedProfessors();
+            // return a minimal projection (you can make a DTO if you prefer)
+            var result = pending.Select(u => new {
+                u.Id,
+                u.Username,
+                u.Email
+            });
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("approve-professor/{userId:int}")]
+        public async Task<IActionResult> ApproveProfessor(int userId)
+        {
+            // read admin identity from token (for audit)
+            var adminName = User?.FindFirstValue(ClaimTypes.Name) ?? User?.Identity?.Name ?? "admin";
+            var adminIdClaim = User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            int adminId = 0;
+            int.TryParse(adminIdClaim, out adminId);
+
+            await _userService.ApproveProfessor(userId, adminId, adminName);
             return NoContent();
         }
     }
