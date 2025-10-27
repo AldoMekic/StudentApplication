@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace StudentApplication.Controllers
 {
+    [Authorize(Policy ="AdminOnly")]
     [Route("api/admins")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -53,13 +54,12 @@ namespace StudentApplication.Controllers
             return NoContent();
         }
 
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("pending-professors")]
-        public async Task<IActionResult> GetPendingProfessors()
+        [HttpGet("unapproved-professors")]
+        public async Task<IActionResult> GetUnapprovedProfessors()
         {
             var pending = await _userService.GetUnapprovedProfessors();
-            // return a minimal projection (you can make a DTO if you prefer)
-            var result = pending.Select(u => new {
+            var result = pending.Select(u => new
+            {
                 u.Id,
                 u.Username,
                 u.Email
@@ -67,15 +67,12 @@ namespace StudentApplication.Controllers
             return Ok(result);
         }
 
-        [Authorize(Policy = "AdminOnly")]
-        [HttpPut("approve-professor/{userId:int}")]
+        [HttpPut("approve/{userId:int}")]
         public async Task<IActionResult> ApproveProfessor(int userId)
         {
-            // read admin identity from token (for audit)
-            var adminName = User?.FindFirstValue(ClaimTypes.Name) ?? User?.Identity?.Name ?? "admin";
-            var adminIdClaim = User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            int adminId = 0;
-            int.TryParse(adminIdClaim, out adminId);
+            var adminIdClaim = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var adminName = User?.Identity?.Name ?? "admin";
+            int.TryParse(adminIdClaim, out var adminId);
 
             await _userService.ApproveProfessor(userId, adminId, adminName);
             return NoContent();

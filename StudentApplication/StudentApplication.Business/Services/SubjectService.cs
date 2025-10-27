@@ -19,6 +19,26 @@ namespace StudentApplication.Business.Services
 
         public async Task CreateSubject(SubjectRequestDTO model)
         {
+            // Make sure the professor exists and is approved
+            var professor = await _databaseContext.Professors
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == model.ProfessorId);
+
+            if (professor == null)
+                throw new KeyNotFoundException("Professor not found");
+
+            // We need the user record to check IsApproved (assuming Professor ↔ User via Username/Email/UserId).
+            // If Professor has a UserId, use that; otherwise adjust accordingly.
+            var user = await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == professor.UserId);
+
+            if (user == null)
+                throw new InvalidOperationException("Professor account record not found");
+
+            if (!user.IsApproved)
+                throw new InvalidOperationException("Professor is not approved and cannot be assigned to a subject.");
+
             var subject = _mapper.Map<Subject>(model);
             await _databaseContext.Subjects.AddAsync(subject);
             await _databaseContext.SaveChangesAsync();
@@ -60,6 +80,16 @@ namespace StudentApplication.Business.Services
 
         public async Task UpdateSubject(Subject subject)
         {
+            // if ProfessorId changed, validate approval again
+            var user = await _databaseContext.Users
+                .AsNoTracking()
+                .Where(u => u.Id == subject.Professor.UserId)
+                .Select(u => new { u.IsApproved })
+                .FirstOrDefaultAsync();
+
+            if (user is null) throw new InvalidOperationException("Professor account record not found");
+            if (!user.IsApproved) throw new InvalidOperationException("Professor is not approved and cannot be assigned to a subject.");
+
             _databaseContext.Update(subject);
             await _databaseContext.SaveChangesAsync();
         }
