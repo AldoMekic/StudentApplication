@@ -47,5 +47,14 @@ namespace StudentApplication.Controllers
             await _gradeService.RemoveGrade(grade);
             return NoContent();
         }
+
+        [HttpPost("{id:int}/request-annulment")]
+        public async Task<IActionResult> RequestAnnulment(int id)
+        {
+            var updated = await _gradeService.RequestAnnulment(id);
+            // reload fully for enriched mapping
+            var full = await _gradeService.GetById(updated.Id);
+            return Ok(_mapper.Map<GradeResponseDTO>(full));
+        }
     }
 }

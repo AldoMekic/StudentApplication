@@ -107,6 +107,12 @@ namespace StudentApplication.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("AnnulmentRequested")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("AnnulmentRequestedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<DateTimeOffset>("AssignedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetimeoffset")

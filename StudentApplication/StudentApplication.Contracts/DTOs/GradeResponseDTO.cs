@@ -13,5 +13,15 @@ namespace StudentApplication.Contracts.DTOs
         public int OfficialGrade { get; set; }
         public float TotalScore { get; set; }
         public DateTimeOffset AssignedAt { get; set; }
+
+        // Enriched
+        public string? SubjectName { get; set; }
+        public string? StudentName { get; set; }
+        public string? ProfessorName { get; set; }
+
+        // Annulment UX
+        public bool AnnulmentRequested { get; set; }
+        public DateTimeOffset? AnnulmentRequestedAt { get; set; }
+        public bool CanRequestAnnulment { get; set; }  // computed
     }
 }

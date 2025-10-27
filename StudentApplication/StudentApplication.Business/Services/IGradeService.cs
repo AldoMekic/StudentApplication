@@ -15,5 +15,7 @@ namespace StudentApplication.Business.Services
         Task<Grade> GetById(int id);
         Task RemoveGrade(Grade grade);
         Task UpdateGrade(Grade grade);
+
+        Task<Grade> RequestAnnulment(int gradeId);
     }
 }

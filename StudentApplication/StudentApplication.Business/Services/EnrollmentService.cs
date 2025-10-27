@@ -41,7 +41,8 @@ namespace StudentApplication.Business.Services
         {
             return await _databaseContext.Enrollments
                 .AsNoTracking()
-                .Include(e => e.Subject)
+                .Include(e => e.Subject).ThenInclude(s => s.Professor)
+                .Include(e => e.Student)
                 .Include(e => e.Grade)
                 .ToListAsync();
         }
@@ -49,7 +50,8 @@ namespace StudentApplication.Business.Services
         public async Task<Enrollment> GetById(int id)
         {
             var result = await _databaseContext.Enrollments
-                .Include(e => e.Subject)
+                .Include(e => e.Subject).ThenInclude(s => s.Professor)
+                .Include(e => e.Student)
                 .Include(e => e.Grade)
                 .FirstOrDefaultAsync(l => l.Id == id);
 
@@ -75,6 +77,37 @@ namespace StudentApplication.Business.Services
         {
             _databaseContext.Update(enrollment);
             await _databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<Enrollment> SetStatus(int id, EnrollmentStatus status)
+        {
+            var e = await _databaseContext.Enrollments.FirstOrDefaultAsync(x => x.Id == id)
+                    ?? throw new KeyNotFoundException("Enrollment not found");
+
+            e.Status = status;
+            if (status == EnrollmentStatus.Completed && e.CompletedAt == null)
+                e.CompletedAt = DateTimeOffset.UtcNow;
+
+            await _databaseContext.SaveChangesAsync();
+            return e;
+        }
+
+
+        public Task<Enrollment> Drop(int id) => SetStatus(id, EnrollmentStatus.Dropped);
+
+        public Task<Enrollment> Complete(int id, DateTimeOffset? completedAt = null)
+        {
+            return CompleteInternal(id, completedAt);
+        }
+
+        private async Task<Enrollment> CompleteInternal(int id, DateTimeOffset? completedAt)
+        {
+            var e = await _databaseContext.Enrollments.FirstOrDefaultAsync(x => x.Id == id)
+                    ?? throw new KeyNotFoundException("Enrollment not found");
+            e.Status = EnrollmentStatus.Completed;
+            e.CompletedAt = completedAt ?? DateTimeOffset.UtcNow;
+            await _databaseContext.SaveChangesAsync();
+            return e;
         }
     }
 }

@@ -48,5 +48,32 @@ namespace StudentApplication.Controllers
             await _enrollmentService.RemoveEnrollment(enrollment);
             return NoContent();
         }
+
+        [HttpPut("{id:int}/drop")]
+        public async Task<IActionResult> Drop(int id)
+        {
+            var e = await _enrollmentService.Drop(id);
+            var dto = _mapper.Map<EnrollmentResponseDTO>(await _enrollmentService.GetById(e.Id));
+            return Ok(dto);
+        }
+
+        [HttpPut("{id:int}/complete")]
+        public async Task<IActionResult> Complete(int id)
+        {
+            var e = await _enrollmentService.Complete(id);
+            var dto = _mapper.Map<EnrollmentResponseDTO>(await _enrollmentService.GetById(e.Id));
+            return Ok(dto);
+        }
+
+        // Generic setter if you want one endpoint:
+        public class SetStatusRequest { public EnrollmentStatus Status { get; set; } }
+
+        [HttpPut("{id:int}/status")]
+        public async Task<IActionResult> SetStatus(int id, [FromBody] SetStatusRequest req)
+        {
+            var e = await _enrollmentService.SetStatus(id, req.Status);
+            var dto = _mapper.Map<EnrollmentResponseDTO>(await _enrollmentService.GetById(e.Id));
+            return Ok(dto);
+        }
     }
 }

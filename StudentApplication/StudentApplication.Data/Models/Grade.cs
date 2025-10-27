@@ -17,5 +17,8 @@ namespace StudentApplication.Data.Models
         public Enrollment Enrollment { get; set; } = default!;
 
         public DateTimeOffset AssignedAt { get; set; } = DateTimeOffset.UtcNow;
+
+        public bool AnnulmentRequested { get; set; } = false;
+        public DateTimeOffset? AnnulmentRequestedAt { get; set; }
     }
 }

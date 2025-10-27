@@ -16,5 +16,9 @@ namespace StudentApplication.Business.Services
         Task<Enrollment?> GetByComposite(int studentId, int subjectId);
         Task RemoveEnrollment(Enrollment enrollment);
         Task UpdateEnrollment(Enrollment enrollment);
+
+        Task<Enrollment> SetStatus(int id, EnrollmentStatus status);
+        Task<Enrollment> Drop(int id);
+        Task<Enrollment> Complete(int id, DateTimeOffset? completedAt = null);
     }
 }

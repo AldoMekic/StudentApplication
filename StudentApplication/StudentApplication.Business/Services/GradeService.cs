@@ -19,7 +19,7 @@ namespace StudentApplication.Business.Services
 
         public async Task<Grade> CreateGrade(GradeRequestDTO model)
         {
-            // Ensure enrollment exists
+            // Load enrollment and prevent duplicates
             var enrollment = await _databaseContext.Enrollments
                 .Include(e => e.Grade)
                 .FirstOrDefaultAsync(e => e.Id == model.EnrollmentId);
@@ -27,29 +27,41 @@ namespace StudentApplication.Business.Services
             if (enrollment == null) throw new KeyNotFoundException("Enrollment not found");
             if (enrollment.Grade != null) throw new InvalidOperationException("This enrollment already has a grade.");
 
+            // Create grade
             var grade = _mapper.Map<Grade>(model);
             await _databaseContext.Grades.AddAsync(grade);
             await _databaseContext.SaveChangesAsync();
 
-            // Optional: keep Student.Grades in sync (read model)
-            var student = await _databaseContext.Students.FirstOrDefaultAsync(s => s.Id == enrollment.StudentId);
-            if (student != null)
-            {
-                student.Grades.Add(grade);
-                await _databaseContext.SaveChangesAsync();
-            }
+            // Auto-complete the enrollment
+            enrollment.Status = EnrollmentStatus.Completed;
+            enrollment.CompletedAt = DateTimeOffset.UtcNow;
+            await _databaseContext.SaveChangesAsync();
 
             return grade;
         }
 
         public async Task<IEnumerable<Grade?>> GetAll()
         {
-            return await _databaseContext.Grades.AsNoTracking().ToListAsync();
+            return await _databaseContext.Grades
+                .AsNoTracking()
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Subject)
+                        .ThenInclude(s => s.Professor)
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Student)
+                .ToListAsync();
         }
 
         public async Task<Grade> GetById(int id)
         {
-            var result = await _databaseContext.Grades.FirstOrDefaultAsync(l => l.Id == id);
+            var result = await _databaseContext.Grades
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Subject)
+                        .ThenInclude(s => s.Professor)
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Student)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
             if (result == null) throw new KeyNotFoundException("Grade not found");
             return result;
         }
@@ -59,6 +71,24 @@ namespace StudentApplication.Business.Services
             _databaseContext.Grades.Remove(grade);
             await _databaseContext.SaveChangesAsync();
         }
+
+        public async Task<Grade> RequestAnnulment(int gradeId)
+        {
+            var g = await _databaseContext.Grades.FirstOrDefaultAsync(x => x.Id == gradeId)
+                    ?? throw new KeyNotFoundException("Grade not found");
+
+            var within3Days = (DateTimeOffset.UtcNow - g.AssignedAt).TotalDays <= 3;
+            if (!within3Days)
+                throw new InvalidOperationException("Annulment window (3 days) has expired.");
+
+            if (g.AnnulmentRequested) return g;
+
+            g.AnnulmentRequested = true;
+            g.AnnulmentRequestedAt = DateTimeOffset.UtcNow;
+            await _databaseContext.SaveChangesAsync();
+            return g;
+        }
+
 
         public async Task UpdateGrade(Grade grade)
         {

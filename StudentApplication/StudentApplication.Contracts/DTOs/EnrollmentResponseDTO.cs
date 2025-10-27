@@ -17,6 +17,9 @@ namespace StudentApplication.Contracts.DTOs
         public DateTimeOffset EnrolledAt { get; set; }
         public DateTimeOffset? CompletedAt { get; set; }
 
+        public string? SubjectTitle { get; set; }
+        public string? StudentName { get; set; }
+
         public SubjectResponseDTO Subject { get; set; }
         public GradeResponseDTO? Grade { get; set; }
     }
