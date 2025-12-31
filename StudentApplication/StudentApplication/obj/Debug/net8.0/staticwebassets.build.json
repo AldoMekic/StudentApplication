@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "Y6Vh+Yf3zS39EsEhgrSmOfLFSZuLLJeE9wzc2c9rkWY=",
-  "Source": "StudentApplication",
-  "BasePath": "_content/StudentApplication",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"upRIPXwgT1mQHbX54vJJ03q2IYVWlTL+tjDv/Ok5LH0=","Source":"StudentApplication","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
