@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Documentation commit
+=======
+Frontend commit
+>>>>>>> frontend
