@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace StudentApplication.Controllers
 {
-    [Authorize(Policy ="AdminOnly")]
+    //[Authorize(Policy ="AdminOnly")]
     [Route("api/admins")]
     [ApiController]
     public class AdminController : ControllerBase

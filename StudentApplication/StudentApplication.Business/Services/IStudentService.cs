@@ -25,5 +25,7 @@ namespace StudentApplication.Business.Services
 
         Task<List<Grade>> GetStudentGrades(int studentId);
         Task RemoveStudentGrade(int studentId, int gradeId);
+
+        Task<Student> GetByUserId(int userId);
     }
 }

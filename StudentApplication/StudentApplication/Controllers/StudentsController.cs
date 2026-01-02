@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using StudentApplication.Business.Services;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace StudentApplication.Controllers
 {
@@ -11,11 +14,13 @@ namespace StudentApplication.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public StudentsController(IStudentService studentService, IMapper mapper)
+        public StudentsController(IStudentService studentService, IUserService userService, IMapper mapper)
         {
             _studentService = studentService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -96,6 +101,22 @@ namespace StudentApplication.Controllers
             var student = await _studentService.GetById(id);
             await _studentService.RemoveStudent(student);
             return NoContent();
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
+        {
+            var username = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            if (string.IsNullOrWhiteSpace(username))
+                return Unauthorized();
+
+            var user = await _userService.GetByUsername(username);
+            if (user == null) return Unauthorized();
+
+            // Ensure StudentProfile is loaded (either Include in service or explicit query)
+            var student = await _studentService.GetByUserId(user.Id); // implement
+            return Ok(_mapper.Map<StudentResponseDTO>(student));
         }
     }
 }

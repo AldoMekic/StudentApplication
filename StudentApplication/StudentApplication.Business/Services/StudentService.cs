@@ -142,5 +142,16 @@ namespace StudentApplication.Business.Services
             _databaseContext.Update(student);
             await _databaseContext.SaveChangesAsync();
         }
+
+        public async Task<Student> GetByUserId(int userId)
+        {
+            var student = await _databaseContext.Students
+                .Include(s => s.Enrollments)
+                .Include(s => s.Grades)
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (student == null) throw new KeyNotFoundException("Student profile not found for this user.");
+            return student;
+        }
     }
 }

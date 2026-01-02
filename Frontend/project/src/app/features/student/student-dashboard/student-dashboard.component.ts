@@ -50,34 +50,25 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   private async initStudent() {
-    this.loading = true;
-    try {
-      const user = this.authService.getUserProfile();
-      this.studentName = user ? (user.first_name || user.email || 'Student') : 'Student';
+  this.loading = true;
+  try {
+    const user = this.authService.getUserProfile();
+    this.studentName = user ? (user.first_name || user.email || 'Student') : 'Student';
 
-      // TEMP: try to read known studentId, otherwise pick the first student from API.
-      const saved = localStorage.getItem('student_id');
-      if (saved) {
-        this.studentId = Number(saved);
-      } else {
-        const all = await this.studentsService.getAll();
-        if (all && all.length) {
-          this.studentId = all[0].id;
-          localStorage.setItem('student_id', String(this.studentId));
-        }
-      }
+    // ✅ get the actual logged-in student's DB record
+    const me = await this.studentsService.getMe();
+this.studentId = me.id;
+this.studentName = `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim() || this.studentName;
 
-      if (this.studentId != null) {
-        await Promise.all([
-          this.loadEnrollments(),
-          this.loadGrades(),
-          this.loadAvailableSubjects()
-        ]);
-      }
-    } finally {
-      this.loading = false;
-    }
+await Promise.all([
+  this.loadEnrollments(),
+  this.loadGrades(),
+  this.loadAvailableSubjects()
+]);
+  } finally {
+    this.loading = false;
   }
+}
 
   async loadEnrollments() {
     if (this.studentId == null) return;
