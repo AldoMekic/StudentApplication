@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { firstValueFrom } from 'rxjs';
-import { API_BASE } from './api.config';
 import { HttpClient } from '@angular/common/http';
 
 export interface EnrollmentResponseDTO {
@@ -21,23 +20,21 @@ export interface EnrollmentRequestDTO {
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentsService {
-  private base = API_BASE + 'api/enrollments/';
+  constructor(private api: ApiService) {}
 
-  constructor(private http: HttpClient) {}
-
-  async getAll(): Promise<EnrollmentResponseDTO[]> {
-    return await firstValueFrom(this.http.get<EnrollmentResponseDTO[]>(this.base + 'getAllEnrollments'));
+  getAll() {
+    return firstValueFrom(this.api.get<EnrollmentResponseDTO[]>('api/enrollments'));
   }
 
   getById(id: number) {
-    return firstValueFrom(this.http.get<EnrollmentResponseDTO>(`api/enrollments/getEnrollmentById/${id}`));
+    return firstValueFrom(this.api.get<EnrollmentResponseDTO>(`api/enrollments/${id}`));
   }
 
-  create(dto: any /* EnrollmentRequestDTO */) {
-    return firstValueFrom(this.http.post('api/enrollments', dto));
+  create(dto: EnrollmentRequestDTO) {
+    return firstValueFrom(this.api.post('api/enrollments', dto));
   }
 
   delete(id: number) {
-    return firstValueFrom(this.http.delete(`api/enrollments/deleteEnrollment/${id}`));
+    return firstValueFrom(this.api.delete(`api/enrollments/${id}`));
   }
 }

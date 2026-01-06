@@ -98,7 +98,7 @@ namespace StudentApplication.Controllers
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(120),
+                expires: DateTime.UtcNow.AddYears(10),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

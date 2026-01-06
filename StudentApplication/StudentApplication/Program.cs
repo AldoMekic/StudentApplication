@@ -5,6 +5,7 @@ using StudentApplication.Business.MappingProfiles;
 using StudentApplication.Business.Services;
 using StudentApplication.Data;
 using StudentApplication.Data.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,13 +46,41 @@ builder.Services.AddAutoMapper(typeof(AdminMappingProfile).Assembly);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.MapInboundClaims = false;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            NameClaimType = JwtRegisteredClaimNames.Sub,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            ),
+            ClockSkew = TimeSpan.Zero
+
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = ctx =>
+            {
+                Console.WriteLine("JWT auth failed: " + ctx.Exception.Message);
+                return Task.CompletedTask;
+            },
+            OnChallenge = ctx =>
+            {
+                Console.WriteLine($"JWT CHALLENGE: {ctx.Error} | {ctx.ErrorDescription}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = ctx =>
+            {
+                Console.WriteLine("Claims:");
+                foreach (var c in ctx.Principal!.Claims)
+                    Console.WriteLine($" - {c.Type} = {c.Value}");
+                return Task.CompletedTask;
+            }
         };
     });
 

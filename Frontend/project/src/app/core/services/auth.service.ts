@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
-import { API_BASE } from './api.config';
 import { HttpClient } from '@angular/common/http';
 
 // Minimal shapes mirroring your backend DTO usage
@@ -54,34 +53,47 @@ export class AuthService {
     }
   }
 
-  private setAuthFromToken(token: string) {
-    const payload = this.decodeJwt(token);
-
-    // Your backend sets claims: sub (username), email, is_student, is_professor
-    const username = payload?.sub ?? null;
-    const email = payload?.email ?? null;
-    const is_student = (payload?.is_student ?? 'false').toString() === 'true';
-    const is_professor = (payload?.is_professor ?? 'false').toString() === 'true';
-
-    // No admin claim in backend – keep false
-    const is_admin = false;
-
-    localStorage.setItem('jwt_token', token);
-    if (username) localStorage.setItem('jwt_username', username);
-    if (email) localStorage.setItem('jwt_email', email);
-    localStorage.setItem('jwt_is_student', String(is_student));
-    localStorage.setItem('jwt_is_professor', String(is_professor));
-    localStorage.setItem('jwt_is_admin', String(is_admin));
-
-    this.authStateSubject.next({
-      token,
-      username,
-      email,
-      is_student,
-      is_professor,
-      is_admin
-    });
+  private pickClaim(payload: any, keys: string[]): string | null {
+  for (const k of keys) {
+    const v = payload?.[k];
+    if (typeof v === 'string' && v.trim()) return v;
   }
+  return null;
+}
+
+private setAuthFromToken(token: string) {
+  const payload = this.decodeJwt(token);
+
+  console.log('[AuthService] jwt payload', payload);
+
+  const username = this.pickClaim(payload, [
+    'username',
+    'sub',
+    'unique_name',
+    'name',
+    'preferred_username',
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name',
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+  ]);
+
+  const email = this.pickClaim(payload, [
+    'email',
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
+  ]);
+
+  const is_student = String(payload?.is_student ?? payload?.isStudent ?? 'false') === 'true';
+  const is_professor = String(payload?.is_professor ?? payload?.isProfessor ?? 'false') === 'true';
+  const is_admin = String(payload?.is_admin ?? payload?.isAdmin ?? 'false') === 'true';
+
+  localStorage.setItem('jwt_token', token);
+  localStorage.setItem('jwt_username', username ?? '');
+  localStorage.setItem('jwt_email', email ?? '');
+  localStorage.setItem('jwt_is_student', String(is_student));
+  localStorage.setItem('jwt_is_professor', String(is_professor));
+  localStorage.setItem('jwt_is_admin', String(is_admin));
+
+  this.authStateSubject.next({ token, username, email, is_student, is_professor, is_admin });
+}
 
   isAuthenticated(): boolean {
     return !!this.authStateSubject.value.token;
@@ -134,22 +146,18 @@ export class AuthService {
 
   async login(username: string, password: string) {
   const result = await firstValueFrom(
-    this.http.post<{ token: string }>(
-      API_BASE + 'api/users/login',
-      { username, password }
-    )
+    this.api.post<{ token: string }>('api/users/login', { username, password })
   );
 
-    if (!result?.token) throw new Error('Login failed');
+  if (!result?.token) throw new Error('Login failed');
   this.setAuthFromToken(result.token);
 
-    // Navigate according to role flags present in JWT
-    const s = this.authStateSubject.value;
-    if (s.is_student) this.router.navigate(['/student']);
-    else if (s.is_professor) this.router.navigate(['/professor']);
-    else if (s.is_admin) this.router.navigate(['/admin']);
-    else this.router.navigate(['/login']);
-  }
+  const s = this.authStateSubject.value;
+  if (s.is_student) this.router.navigate(['/student']);
+  else if (s.is_professor) this.router.navigate(['/professor']);
+  else if (s.is_admin) this.router.navigate(['/admin']);
+  else this.router.navigate(['/login']);
+}
 
   async logout() {
     localStorage.removeItem('jwt_token');

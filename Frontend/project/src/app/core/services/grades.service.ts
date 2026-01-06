@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { firstValueFrom } from 'rxjs';
-import { API_BASE } from './api.config';
 import { HttpClient } from '@angular/common/http';
 
 export interface CreateGradeRequest {
@@ -24,23 +23,25 @@ export interface GradeRequestDTO {
 
 @Injectable({ providedIn: 'root' })
 export class GradesService {
-  private base = API_BASE + 'api/grades/';
-
-  constructor(private http: HttpClient) {}
+  constructor(private api: ApiService) {}
 
   getAll() {
-    return firstValueFrom(this.http.get<GradeResponseDTO[]>('api/grades/getAllGrades'));
+    return firstValueFrom(this.api.get<GradeResponseDTO[]>('api/grades'));
   }
 
   getById(id: number) {
-    return firstValueFrom(this.http.get<GradeResponseDTO>(`api/grades/getGradeById/${id}`));
+    return firstValueFrom(this.api.get<GradeResponseDTO>(`api/grades/${id}`));
   }
 
-  async create(body: CreateGradeRequest): Promise<void> {
-    await firstValueFrom(this.http.post<void>(this.base, body));
+  create(body: CreateGradeRequest) {
+    return firstValueFrom(this.api.post<void>('api/grades', body));
   }
 
   delete(id: number) {
-    return firstValueFrom(this.http.delete(`api/grades/deleteGrade/${id}`));
+    return firstValueFrom(this.api.delete<void>(`api/grades/${id}`));
+  }
+
+  requestAnnulment(id: number) {
+    return firstValueFrom(this.api.post<GradeResponseDTO>(`api/grades/${id}/request-annulment`, {}));
   }
 }

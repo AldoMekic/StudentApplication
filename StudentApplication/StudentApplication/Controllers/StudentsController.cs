@@ -107,15 +107,18 @@ namespace StudentApplication.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> GetMe()
         {
-            var username = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var username =
+                User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                User.Identity?.Name;
+
             if (string.IsNullOrWhiteSpace(username))
-                return Unauthorized();
+                return Unauthorized("No username");
 
             var user = await _userService.GetByUsername(username);
-            if (user == null) return Unauthorized();
+            if (user == null) return Unauthorized("Can't find user");
 
-            // Ensure StudentProfile is loaded (either Include in service or explicit query)
-            var student = await _studentService.GetByUserId(user.Id); // implement
+            var student = await _studentService.GetByUserId(user.Id);
             return Ok(_mapper.Map<StudentResponseDTO>(student));
         }
     }

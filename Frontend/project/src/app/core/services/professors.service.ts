@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { firstValueFrom } from 'rxjs';
-import { API_BASE } from './api.config';
 import { HttpClient } from '@angular/common/http';
 
 export interface ProfessorResponseDTO {
@@ -26,30 +25,21 @@ export interface SubjectResponseDTO {
 
 @Injectable({ providedIn: 'root' })
 export class ProfessorsService {
-  private base = API_BASE + 'api/professors/';
+  constructor(private api: ApiService) {}
 
-    constructor(private http: HttpClient) {}
-
-  async getAll(): Promise<ProfessorResponseDTO[]> {
-    return await firstValueFrom(this.http.get<ProfessorResponseDTO[]>(this.base + 'getAllProfessors'));
+  getAll() {
+    return firstValueFrom(this.api.get<ProfessorResponseDTO[]>('api/professors'));
   }
 
   getById(id: number) {
-    return firstValueFrom(this.http.get<ProfessorResponseDTO>(`api/professors/getProfessorById/${id}`));
+    return firstValueFrom(this.api.get<ProfessorResponseDTO>(`api/professors/${id}`));
   }
 
-  getByName(name: string) {
-    return firstValueFrom(this.http.get<ProfessorResponseDTO>(`api/professors/getProfessorByName/${encodeURIComponent(name)}`));
+  getProfessorSubjects(professorId: number) {
+    return firstValueFrom(this.api.get<SubjectResponseDTO[]>(`api/professors/${professorId}/subjects`));
   }
 
-  async getProfessorSubjects(professorId: number): Promise<SubjectResponseDTO[]> {
-    return await firstValueFrom(
-      this.http.get<SubjectResponseDTO[]>(this.base + `getProfessorSubjects/${professorId}`)
-    );
-  }
-
-  // The commented “add subject to professor” doesn’t exist now; we’ll skip until exposed.
   removeProfessorSubject(professorId: number, subjectId: number) {
-    return firstValueFrom(this.http.delete(`api/professors/removeProfessorSubject/${professorId}/${subjectId}`));
+    return firstValueFrom(this.api.delete(`api/professors/${professorId}/subjects/${subjectId}`));
   }
 }
