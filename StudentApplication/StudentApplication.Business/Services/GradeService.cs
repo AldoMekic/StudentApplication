@@ -95,5 +95,48 @@ namespace StudentApplication.Business.Services
             _databaseContext.Update(grade);
             await _databaseContext.SaveChangesAsync();
         }
+
+        public async Task<IReadOnlyList<GradeResponseDTO>> GetGradesForStudentUserId(int userId)
+        {
+            var now = DateTimeOffset.UtcNow;
+
+            var grades = await _databaseContext.Grades
+                .AsNoTracking()
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Subject)
+                        .ThenInclude(s => s.Professor)
+                .Include(g => g.Enrollment)
+                    .ThenInclude(e => e.Student)
+                .Where(g =>
+                    g.Enrollment.Student.UserId == userId
+                )
+                .Select(g => new GradeResponseDTO
+                {
+                    Id = g.Id,
+                    EnrollmentId = g.EnrollmentId,
+                    OfficialGrade = g.OfficialGrade,
+                    TotalScore = g.TotalScore,
+                    AssignedAt = g.AssignedAt,
+
+                    SubjectName = g.Enrollment.Subject.Title,
+                    StudentName = g.Enrollment.Student.FirstName + " " +
+                                  g.Enrollment.Student.LastName,
+                    ProfessorName = g.Enrollment.Subject.Professor != null
+                        ? g.Enrollment.Subject.Professor.FirstName + " " +
+                          g.Enrollment.Subject.Professor.LastName
+                        : null,
+
+                    AnnulmentRequested = g.AnnulmentRequested,
+                    AnnulmentRequestedAt = g.AnnulmentRequestedAt,
+
+                    CanRequestAnnulment =
+                        !g.AnnulmentRequested &&
+                        (now - g.AssignedAt).TotalDays <= 3
+                })
+                .OrderByDescending(g => g.AssignedAt)
+                .ToListAsync();
+
+            return grades;
+        }
     }
 }

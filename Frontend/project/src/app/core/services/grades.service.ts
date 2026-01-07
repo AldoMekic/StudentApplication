@@ -4,17 +4,26 @@ import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export interface CreateGradeRequest {
-  studentId: number;
-  subjectId: number;
-  professorId: number;
-  gradeValue: number;
-  finalScore: number;
-  // add/rename fields if your .NET DTO needs different names
+  // Align with your backend GradeRequestDTO
+  enrollmentId: number;
+  officialGrade: number;
+  totalScore: number;
 }
 
 export interface GradeResponseDTO {
   id: number;
-  // adapt
+  enrollmentId: number;
+  officialGrade: number;
+  totalScore: number;
+  assignedAt: string;
+
+  subjectName?: string | null;
+  studentName?: string | null;
+  professorName?: string | null;
+
+  annulmentRequested: boolean;
+  annulmentRequestedAt?: string | null;
+  canRequestAnnulment: boolean;
 }
 
 export interface GradeRequestDTO {
@@ -27,6 +36,11 @@ export class GradesService {
 
   getAll() {
     return firstValueFrom(this.api.get<GradeResponseDTO[]>('api/grades'));
+  }
+
+  /** ✅ New: backend returns only grades for the logged-in student */
+  getMyGrades() {
+    return firstValueFrom(this.api.get<GradeResponseDTO[]>('api/grades/me'));
   }
 
   getById(id: number) {
@@ -42,6 +56,8 @@ export class GradesService {
   }
 
   requestAnnulment(id: number) {
-    return firstValueFrom(this.api.post<GradeResponseDTO>(`api/grades/${id}/request-annulment`, {}));
+    return firstValueFrom(
+      this.api.post<GradeResponseDTO>(`api/grades/${id}/request-annulment`, {})
+    );
   }
 }

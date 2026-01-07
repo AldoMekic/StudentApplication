@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { StudentsService, SubjectResponseDTO, GradeResponseDTO } from '../../../core/services/students.service';
+import { StudentsService, SubjectResponseDTO} from '../../../core/services/students.service';
 import { SubjectsService } from '../../../core/services/subjects.service';
+import { GradesService , GradeResponseDTO } from '../../../core/services/grades.service';
 
 interface EnrollmentCard {
   id: number;                // we’ll treat this as subjectId for UI purposes
@@ -42,7 +43,8 @@ export class StudentDashboardComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private studentsService: StudentsService,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    private gradesService: GradesService
   ) {}
 
   async ngOnInit() {
@@ -50,25 +52,25 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   private async initStudent() {
-  this.loading = true;
-  try {
-    const user = this.authService.getUserProfile();
-    this.studentName = user ? (user.first_name || user.email || 'Student') : 'Student';
+    this.loading = true;
+    try {
+      const user = this.authService.getUserProfile();
+      this.studentName = user ? (user.first_name || user.email || 'Student') : 'Student';
 
-    // ✅ get the actual logged-in student's DB record
-    const me = await this.studentsService.getMe();
-this.studentId = me.id;
-this.studentName = `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim() || this.studentName;
+      // ✅ get the actual logged-in student's DB record
+      const me = await this.studentsService.getMe();
+      this.studentId = me.id;
+      this.studentName = `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim() || this.studentName;
 
-await Promise.all([
-  this.loadEnrollments(),
-  this.loadGrades(),
-  this.loadAvailableSubjects()
-]);
-  } finally {
-    this.loading = false;
+      await Promise.all([
+        this.loadEnrollments(),
+        this.loadGrades(),            // ✅ now uses gradesService.getMyGrades()
+        this.loadAvailableSubjects()
+      ]);
+    } finally {
+      this.loading = false;
+    }
   }
-}
 
   async loadEnrollments() {
     if (this.studentId == null) return;
@@ -86,29 +88,30 @@ await Promise.all([
   }
 
   async loadGrades() {
-    if (this.studentId == null) return;
-    const grades = await this.studentsService.getStudentGrades(this.studentId);
+    // ✅ No studentId required here anymore (backend filters by JWT)
+    const grades = await this.gradesService.getMyGrades();
 
-    // We’ll keep shape simple, and compute the 3-day rule if assignedDate is present
     this.grades = grades.map(g => {
-  const assignedDate = g['assignedDate'] || g['assigned_date'];
-  let canRequest = false;
-  if (assignedDate) {
-    const d = new Date(assignedDate);
-    const days = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
-    canRequest = days <= 3 && !g['annulment_requested'];
-  }
-  return {
-    ...g,
-    subject_name: g['subjectName'] || g['subject_name'],
-    professor_name: g['professorName'] || g['professor_name'],
-    assigned_date: assignedDate,
-    can_request_annulment: canRequest,
-    // supply snake_case for the template if backend uses camelCase
-    grade_value: (g as any).grade_value ?? g.gradeValue,
-    final_score: (g as any).final_score ?? g.finalScore
-  };
-});
+      // backend DTO uses AssignedAt + CanRequestAnnulment + AnnulmentRequested
+      const assignedDate = g.assignedAt;
+
+      return {
+        ...g,
+
+        // your template fields
+        subject_name: g.subjectName ?? '',
+        professor_name: g.professorName ?? '',
+        assigned_date: assignedDate,
+
+        // map grade fields to what your HTML expects
+        grade_value: g.officialGrade,
+        final_score: g.totalScore,
+
+        // annulment flags used in the HTML
+        can_request_annulment: g.canRequestAnnulment,
+        annulment_requested: g.annulmentRequested
+      };
+    });
   }
 
   async loadAvailableSubjects() {
@@ -142,9 +145,15 @@ await Promise.all([
     }
   }
 
-  // Not supported by backend yet; leave as no-op
-  async requestAnnulment(_gradeId: number) {
-    alert('Annulment request flow is not available on the backend yet.');
+  async requestAnnulment(gradeId: number) {
+    try {
+      await this.gradesService.requestAnnulment(gradeId);
+      await this.loadGrades();
+      alert('Annulment request submitted.');
+    } catch (err: any) {
+      console.error('[StudentDashboard] requestAnnulment failed', err);
+      alert(err?.error ?? 'Failed to request annulment.');
+    }
   }
 
   logout() {

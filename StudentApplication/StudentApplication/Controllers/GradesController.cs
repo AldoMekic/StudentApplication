@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentApplication.Business.Services;
 using StudentApplication.Contracts.DTOs;
 using StudentApplication.Data.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace StudentApplication.Controllers
 {
@@ -11,11 +14,13 @@ namespace StudentApplication.Controllers
     public class GradesController : ControllerBase
     {
         private readonly IGradeService _gradeService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public GradesController(IGradeService gradeService, IMapper mapper)
+        public GradesController(IGradeService gradeService, IUserService userService, IMapper mapper)
         {
             _gradeService = gradeService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -55,6 +60,26 @@ namespace StudentApplication.Controllers
             // reload fully for enriched mapping
             var full = await _gradeService.GetById(updated.Id);
             return Ok(_mapper.Map<GradeResponseDTO>(full));
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMyGrades()
+        {
+            var username =
+                User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(username))
+                return Unauthorized("No username");
+
+            var user = await _userService.GetByUsername(username);
+            if (user == null) return Unauthorized("Can't find user");
+            if (!user.IsStudent) return Forbid();
+
+            var grades = await _gradeService.GetGradesForStudentUserId(user.Id);
+            return Ok(grades);
         }
     }
 }

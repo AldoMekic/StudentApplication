@@ -17,5 +17,7 @@ namespace StudentApplication.Business.Services
         Task UpdateGrade(Grade grade);
 
         Task<Grade> RequestAnnulment(int gradeId);
+
+        Task<IReadOnlyList<GradeResponseDTO>> GetGradesForStudentUserId(int userId);
     }
 }
