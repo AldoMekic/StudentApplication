@@ -110,5 +110,14 @@ namespace StudentApplication.Business.Services
             _databaseContext.Update(professor);
             await _databaseContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Professor>> GetApproved()
+        {
+            return await _databaseContext.Professors
+                .AsNoTracking()
+                .Include(p => p.User)
+                .Where(p => p.User.IsApproved)
+                .ToListAsync();
+        }
     }
 }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { DepartmentsService, DepartmentRequestDTO, DepartmentResponseDTO } from '../../../core/services/departments.service';
 import { SubjectsService, SubjectRequestDTO, SubjectResponseDTO } from '../../../core/services/subjects.service';
+import { ProfessorsService, ProfessorResponseDTO } from '../../../core/services/professors.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   adminName = '';
   // approvals temporarily disabled (no matching backend endpoints right now)
   pendingProfessors: any[] = [];
-  approvedProfessors: any[] = [];
+  approvedProfessors: ProfessorResponseDTO[] = [];
 
   departments: DepartmentResponseDTO[] = [];
   subjects: SubjectResponseDTO[] = [];
@@ -35,13 +36,15 @@ export class AdminDashboardComponent implements OnInit {
   newSubject: SubjectRequestDTO = {
     title: '',
     academicYear: '',
-    description: ''
+    description: '',
+    professorId: 0
   };
 
   constructor(
     public authService: AuthService,
     private departmentsService: DepartmentsService,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    private professorsService: ProfessorsService
   ) {}
 
   async ngOnInit() {
@@ -51,13 +54,17 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async loadAll() {
-    this.loading = true;
-    try {
-      await Promise.all([this.loadDepartments(), this.loadSubjects()]);
-    } finally {
-      this.loading = false;
-    }
+  this.loading = true;
+  try {
+    await Promise.all([
+      this.loadDepartments(),
+      this.loadSubjects(),
+      this.loadProfessors()
+    ]);
+  } finally {
+    this.loading = false;
   }
+}
 
   async loadDepartments() {
     this.departments = await this.departmentsService.getAll();
@@ -66,6 +73,10 @@ export class AdminDashboardComponent implements OnInit {
   async loadSubjects() {
     this.subjects = await this.subjectsService.getAll();
   }
+
+  async loadProfessors() {
+  this.approvedProfessors = await this.professorsService.getAll();
+}
 
   // Departments
   openDepartmentModal() {
@@ -106,19 +117,24 @@ rejectProfessor(professor: any) {
 
   // Subjects
   openSubjectModal() {
-    this.showSubjectModal = true;
-    this.newSubject = { title: '', academicYear: '', description: '' };
-  }
+  this.showSubjectModal = true;
+  this.newSubject = { title: '', academicYear: '', description: '', professorId: 0 };
+}
 
   async createSubject() {
-    if (!this.newSubject.title) {
-      alert('Please fill in the subject title');
-      return;
-    }
-    await this.subjectsService.create(this.newSubject);
-    this.showSubjectModal = false;
-    await this.loadSubjects();
+  if (!this.newSubject.title) {
+    alert('Please fill in the subject title');
+    return;
   }
+  if (!this.newSubject.professorId || this.newSubject.professorId <= 0) {
+    alert('Please select a professor');
+    return;
+  }
+
+  await this.subjectsService.create(this.newSubject);
+  this.showSubjectModal = false;
+  await this.loadSubjects();
+}
 
   async deleteSubject(id: number) {
     if (!confirm('Are you sure you want to delete this subject?')) return;

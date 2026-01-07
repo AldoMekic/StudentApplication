@@ -80,5 +80,12 @@ namespace StudentApplication.Controllers
             await _professorService.RemoveProfessor(professor);
             return NoContent();
         }
+
+        [HttpGet("approved")]
+        public async Task<IActionResult> GetApproved()
+        {
+            var profs = await _professorService.GetApproved(); // implement
+            return Ok(_mapper.Map<IEnumerable<ProfessorResponseDTO>>(profs));
+        }
     }
 }

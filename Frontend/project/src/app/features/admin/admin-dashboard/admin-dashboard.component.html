@@ -178,6 +178,23 @@
         <label for="academicYear">Academic Year</label>
         <input type="text" id="academicYear" [(ngModel)]="newSubject.academicYear" name="academicYear" />
       </div>
+
+      <div class="form-group">
+  <label for="subjectProfessor">Professor *</label>
+  <select
+    id="subjectProfessor"
+    [(ngModel)]="newSubject.professorId"
+    name="subjectProfessor"
+    required
+  >
+    <option [ngValue]="0">-- Select professor --</option>
+
+    <option *ngFor="let p of approvedProfessors" [ngValue]="p.id">
+      {{ p.firstName }} {{ p.lastName }} ({{ p.email }})
+    </option>
+  </select>
+</div>
+
       <div class="form-group">
         <label for="subjectDescription">Description</label>
         <textarea id="subjectDescription" [(ngModel)]="newSubject.description" name="subjectDescription" rows="3"></textarea>

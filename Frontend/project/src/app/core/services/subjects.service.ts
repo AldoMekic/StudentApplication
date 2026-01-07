@@ -15,6 +15,7 @@ export interface SubjectRequestDTO {
   title: string;
   academicYear?: string;
   description?: string;
+  professorId: number
 }
 
 @Injectable({ providedIn: 'root' })
