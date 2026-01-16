@@ -75,7 +75,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async loadProfessors() {
-  this.approvedProfessors = await this.professorsService.getAll();
+  this.approvedProfessors = await this.professorsService.getApproved();
 }
 
   // Departments

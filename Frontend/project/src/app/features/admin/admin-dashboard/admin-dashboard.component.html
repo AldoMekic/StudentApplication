@@ -113,7 +113,7 @@
           <tbody>
             <tr *ngFor="let subject of subjects">
               <td>{{ subject.title }}</td>
-              <td>{{ subject.academicYear || '—' }}</td>
+              <td>{{ subject.year || '—' }}</td>
               <td>{{ subject.description || '—' }}</td>
               <td>
                 <button class="btn-sm btn-danger" (click)="deleteSubject(subject.id)">

@@ -31,6 +31,10 @@ export class ProfessorsService {
     return firstValueFrom(this.api.get<ProfessorResponseDTO[]>('api/professors'));
   }
 
+  getApproved() {
+    return firstValueFrom(this.api.get<ProfessorResponseDTO[]>('api/professors/approved'));
+  }
+
   getById(id: number) {
     return firstValueFrom(this.api.get<ProfessorResponseDTO>(`api/professors/${id}`));
   }

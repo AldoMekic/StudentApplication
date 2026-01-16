@@ -51,6 +51,21 @@
      *ngIf="(enrollment.attendance_percentage ?? 0) < 75 && enrollment.status === 'attending'">
   Warning: You need 75% attendance to take the exam
 </div>
+
+    <div class="grade-summary" *ngIf="enrollment.status === 'completed'">
+  <ng-container *ngIf="gradeByEnrollmentId.get(enrollment.id) as g; else noGradeYet">
+    <p><strong>Grade:</strong> <span class="grade-badge">{{ g.officialGrade }}</span></p>
+    <p><strong>Final score:</strong> {{ g.totalScore }}</p>
+    <p><strong>Assigned:</strong> {{ g.assignedAt | date:'short' }}</p>
+  </ng-container>
+
+  <ng-template #noGradeYet>
+    <p><strong>Grade:</strong> Not assigned yet.</p>
+  </ng-template>
+</div>
+
+
+
           </div>
           <div class="card-footer" *ngIf="enrollment.status === 'attending'">
             <button class="btn-danger" (click)="dropSubject(enrollment.id)">Drop Subject</button>

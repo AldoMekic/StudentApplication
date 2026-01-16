@@ -5,6 +5,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { StudentsService, SubjectResponseDTO} from '../../../core/services/students.service';
 import { SubjectsService } from '../../../core/services/subjects.service';
 import { GradesService , GradeResponseDTO } from '../../../core/services/grades.service';
+import { EnrollmentsService, EnrollmentResponseDTO } from '../../../core/services/enrollments.service';
 
 interface EnrollmentCard {
   id: number;                // we’ll treat this as subjectId for UI purposes
@@ -34,17 +35,20 @@ export class StudentDashboardComponent implements OnInit {
   annulment_requested?: boolean;
   grade_value?: number;
   final_score?: number;
+  
 })[] = [];
   availableSubjects: AvailableSubject[] = [];
   loading = true;
   activeTab: 'enrollments' | 'grades' | 'subjects' = 'enrollments';
   studentId: number | null = null;
+  gradeByEnrollmentId = new Map<number, GradeResponseDTO>();
 
   constructor(
     public authService: AuthService,
     private studentsService: StudentsService,
     private subjectsService: SubjectsService,
-    private gradesService: GradesService
+    private gradesService: GradesService,
+    private enrollmentsService: EnrollmentsService
   ) {}
 
   async ngOnInit() {
@@ -72,68 +76,87 @@ export class StudentDashboardComponent implements OnInit {
     }
   }
 
+  private normalizeStatus(s: any): 'attending' | 'completed' | 'dropped' {
+  const v = String(s ?? '').toLowerCase();
+  if (v === 'completed') return 'completed';
+  if (v === 'dropped') return 'dropped';
+  return 'attending';
+}
+
   async loadEnrollments() {
-    if (this.studentId == null) return;
-    const subjects = await this.studentsService.getStudentSubjects(this.studentId);
+  const allEnrollments = await this.enrollmentsService.getAll();
 
-    // Treat "enrollments" as subjects with default status 'attending'
-    this.enrollments = subjects.map(s => ({
-      id: s.id,
-      status: 'attending', // backend endpoint doesn’t return status; placeholder
-      enrolled_at: '',     // not available
-      subject: s
-    }));
+  const myEnrollments = allEnrollments.filter(e => {
+    const sid = e.studentId ?? e.student_id;
+    return sid === this.studentId!;
+  });
 
-    // If you later expose enrollment status, map it here properly.
-  }
+  const allSubjects = await this.subjectsService.getAll();
+  const subjectById = new Map(allSubjects.map(s => [s.id, s]));
 
-  async loadGrades() {
-    // ✅ No studentId required here anymore (backend filters by JWT)
-    const grades = await this.gradesService.getMyGrades();
-
-    this.grades = grades.map(g => {
-      // backend DTO uses AssignedAt + CanRequestAnnulment + AnnulmentRequested
-      const assignedDate = g.assignedAt;
+  this.enrollments = myEnrollments
+    .filter(e => {
+      const subjectId = e.subjectId ?? e.subject_id;
+      return !!(subjectId && subjectById.get(subjectId));
+    })
+    .map(e => {
+      const subjectId = (e.subjectId ?? e.subject_id)!;
+      const subject = subjectById.get(subjectId)!;
 
       return {
-        ...g,
-
-        // your template fields
-        subject_name: g.subjectName ?? '',
-        professor_name: g.professorName ?? '',
-        assigned_date: assignedDate,
-
-        // map grade fields to what your HTML expects
-        grade_value: g.officialGrade,
-        final_score: g.totalScore,
-
-        // annulment flags used in the HTML
-        can_request_annulment: g.canRequestAnnulment,
-        annulment_requested: g.annulmentRequested
-      };
+        id: e.id,
+        status: this.normalizeStatus(e.status),
+        enrolled_at: '',   // keep as you do
+        subject
+      } satisfies EnrollmentCard;
     });
+}
+  async loadGrades() {
+  const grades = await this.gradesService.getMyGrades();
+
+  this.gradeByEnrollmentId = new Map<number, GradeResponseDTO>();
+  for (const g of grades) {
+    if (g.enrollmentId != null) {
+      this.gradeByEnrollmentId.set(g.enrollmentId, g);
+    }
   }
+
+  // keep your existing table mapping
+  this.grades = grades.map(g => ({
+    ...g,
+    subject_name: g.subjectName ?? '',
+    professor_name: g.professorName ?? '',
+    assigned_date: g.assignedAt,
+    grade_value: g.officialGrade,
+    final_score: g.totalScore,
+    can_request_annulment: g.canRequestAnnulment,
+    annulment_requested: g.annulmentRequested
+  }));
+}
 
   async loadAvailableSubjects() {
     const all = await this.subjectsService.getAll();
-    const enrolledIds = new Set<number>(this.enrollments.map(e => e.subject.id));
+    const enrolledIds = new Set<number>(this.enrollments.map(e => e.subject?.id).filter((x): x is number => !!x));
     this.availableSubjects = all.filter(s => !enrolledIds.has(s.id));
   }
 
   async enrollInSubject(subjectId: number) {
-    if (this.studentId == null) return;
-    await this.studentsService.addSubjectToStudent(this.studentId, subjectId);
-    await this.loadEnrollments();
-    await this.loadAvailableSubjects();
-  }
+  if (this.studentId == null) return;
 
-  async dropSubject(subjectOrEnrollmentId: number) {
-    if (this.studentId == null) return;
-    // our "enrollment id" is actually subjectId in this simplified mapping
-    await this.studentsService.removeStudentSubject(this.studentId, subjectOrEnrollmentId);
-    await this.loadEnrollments();
-    await this.loadAvailableSubjects();
-  }
+  await this.enrollmentsService.create({
+    studentId: this.studentId,
+    subjectId
+  });
+
+  await this.loadEnrollments();
+  await this.loadAvailableSubjects();
+}
+
+async dropSubject(enrollmentId: number) {
+  await this.enrollmentsService.drop(enrollmentId);
+  await this.loadEnrollments();
+  await this.loadAvailableSubjects();
+}
 
   // Keep your CSS hook names for badges
   getStatusClass(status: string): string {

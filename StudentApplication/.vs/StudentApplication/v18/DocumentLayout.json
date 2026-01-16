@@ -3,76 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\iprofessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\iprofessorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\subjectrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\subjectrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\enrollmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\enrollmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\subjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\subjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\mappingprofiles\\subjectmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\mappingprofiles\\subjectmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\subjectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\subjectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\gradescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\gradescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\gradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\gradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\graderequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\graderequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\grade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\grade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.contracts\\dtos\\graderesponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7FCA82D-43BE-4150-B2AF-F716E0DC07A7}|StudentApplication.Contracts\\StudentApplication.Contracts.csproj|solutionrelative:studentapplication.contracts\\dtos\\graderesponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\igradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\igradeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.data\\models\\enrollment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70D4B73E-6C70-4A08-967C-7229AF7C29D9}|StudentApplication.Data\\StudentApplication.Data.csproj|solutionrelative:studentapplication.data\\models\\enrollment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\enrollmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\enrollmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication.business\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EB0F49B-4ABF-418D-8C58-337D95AB5BE8}|StudentApplication.Business\\StudentApplication.Business.csproj|solutionrelative:studentapplication.business\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|solutionrelative:studentapplication\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AF031A20-0430-4E6A-B8C3-43155AEC5264}|StudentApplication\\StudentApplication.csproj|c:\\users\\aldom\\onedrive\\desktop\\student application\\studentapplication\\studentapplication\\controllers\\departmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -90,186 +42,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IProfessorService.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IProfessorService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IProfessorService.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IProfessorService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\IProfessorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T13:34:39.401Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ProfessorService.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\ProfessorService.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\ProfessorService.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAQwHYAAAAuAAAAAAAAAA==",
+              "Title": "EnrollmentsController.cs",
+              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\EnrollmentsController.cs",
+              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\EnrollmentsController.cs",
+              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\EnrollmentsController.cs",
+              "RelativeToolTip": "StudentApplication\\Controllers\\EnrollmentsController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAqwEQAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T13:34:24.879Z",
+              "WhenOpened": "2026-01-16T13:58:01.102Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SubjectRequestDTO.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\SubjectRequestDTO.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\SubjectRequestDTO.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\SubjectRequestDTO.cs",
-              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\SubjectRequestDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T13:33:29.312Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "SubjectService.cs",
               "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\SubjectService.cs",
               "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\SubjectService.cs",
               "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\SubjectService.cs",
               "RelativeToolTip": "StudentApplication.Business\\Services\\SubjectService.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAAAGAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T13:30:07.776Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "GradeService.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\GradeService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\GradeService.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\GradeService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\GradeService.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAowIsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T12:44:34.355Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IGradeService.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IGradeService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\IGradeService.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\IGradeService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\IGradeService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T12:44:24.652Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Enrollment.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Enrollment.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\Enrollment.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Enrollment.cs",
-              "RelativeToolTip": "StudentApplication.Data\\Models\\Enrollment.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-06T18:41:11.806Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Program.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Program.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Program.cs",
-              "RelativeToolTip": "StudentApplication\\Program.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAwwFEAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:34.043Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGMAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:29.314Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GradesController.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\GradesController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\GradesController.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\GradesController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\GradesController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAgwD8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:08.058Z",
+              "WhenOpened": "2026-01-16T13:28:30.375Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "SubjectMappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\SubjectMappingProfile.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Business\\MappingProfiles\\SubjectMappingProfile.cs",
+              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\MappingProfiles\\SubjectMappingProfile.cs",
+              "RelativeToolTip": "StudentApplication.Business\\MappingProfiles\\SubjectMappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T13:28:16.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProfessorService.cs",
+              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
+              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\ProfessorService.cs",
+              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\ProfessorService.cs",
+              "RelativeToolTip": "StudentApplication.Business\\Services\\ProfessorService.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAqwHoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T13:25:26.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ProfessorsController.cs",
               "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\ProfessorsController.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Controllers\\ProfessorsController.cs",
               "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\ProfessorsController.cs",
               "RelativeToolTip": "StudentApplication\\Controllers\\ProfessorsController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAQwFgAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAqwD8AAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:13.315Z",
+              "WhenOpened": "2026-01-16T13:20:09.094Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "GradeResponseDTO.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
-              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\GradeResponseDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T12:45:13.737Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Grade.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Grade.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Data\\Models\\Grade.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Data\\Models\\Grade.cs",
-              "RelativeToolTip": "StudentApplication.Data\\Models\\Grade.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T12:47:14.16Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Business\\Services\\UserService.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Business\\Services\\UserService.cs",
-              "RelativeToolTip": "StudentApplication.Business\\Services\\UserService.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-06T18:25:12.616Z"
             },
             {
               "$type": "Document",
@@ -281,61 +119,25 @@
               "RelativeToolTip": "StudentApplication\\Controllers\\SubjectsController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAqwDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:23.643Z",
+              "WhenOpened": "2026-01-16T13:19:56.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "GradeRequestDTO.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
-              "RelativeDocumentMoniker": "StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
-              "RelativeToolTip": "StudentApplication.Contracts\\DTOs\\GradeRequestDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T12:47:21.575Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "StudentsController.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\StudentsController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\StudentsController.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\StudentsController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\StudentsController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAiwG0AAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:18.587Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "EnrollmentsController.cs",
-              "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\EnrollmentsController.cs",
-              "RelativeDocumentMoniker": "StudentApplication\\Controllers\\EnrollmentsController.cs",
-              "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\EnrollmentsController.cs",
-              "RelativeToolTip": "StudentApplication\\Controllers\\EnrollmentsController.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAkwE8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:23:02.635Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 6,
               "Title": "DepartmentsController.cs",
               "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\DepartmentsController.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Controllers\\DepartmentsController.cs",
               "ToolTip": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\DepartmentsController.cs",
               "RelativeToolTip": "StudentApplication\\Controllers\\DepartmentsController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwCIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAqwDQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T13:22:57.09Z"
+              "WhenOpened": "2026-01-05T13:22:57.09Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 7,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\aldom\\OneDrive\\Desktop\\Student application\\StudentApplication\\StudentApplication\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "StudentApplication\\Controllers\\AdminController.cs",

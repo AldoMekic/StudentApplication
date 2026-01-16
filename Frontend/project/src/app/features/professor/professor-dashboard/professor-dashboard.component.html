@@ -76,16 +76,44 @@
                   {{ e.status }}
                 </span>
               </td>
-              <td>
-                <button
-                  class="btn-sm btn-primary"
-                  *ngIf="e.status === 'attending'"
-                  (click)="openGradeModal(e)"
-                >
-                  Assign Grade
-                </button>
-                <span *ngIf="e.status !== 'attending'">—</span>
-              </td>
+             <td>
+  <!-- ATTENDING: professor can complete or drop -->
+  <ng-container *ngIf="e.status === 'attending'">
+    <button
+      class="btn-sm btn-success"
+      (click)="completeEnrollment(e)"
+      [disabled]="!e.enrollmentId"
+      style="margin-right:6px;"
+    >
+      Complete
+    </button>
+
+    <button
+      class="btn-sm btn-danger"
+      (click)="dropEnrollment(e)"
+      [disabled]="!e.enrollmentId"
+    >
+      Drop
+    </button>
+  </ng-container>
+
+  <!-- COMPLETED: professor can assign grade -->
+  <ng-container *ngIf="e.status === 'completed'">
+    <button
+      class="btn-sm btn-primary"
+      (click)="openGradeModal(e)"
+      [disabled]="!e.enrollmentId"
+    >
+      Assign Grade
+    </button>
+  </ng-container>
+
+  <!-- DROPPED: nothing -->
+  <ng-container *ngIf="e.status === 'dropped'">
+    —
+  </ng-container>
+
+</td>
             </tr>
           </tbody>
         </table>

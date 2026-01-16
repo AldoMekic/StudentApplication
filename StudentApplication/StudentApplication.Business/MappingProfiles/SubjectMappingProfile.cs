@@ -13,7 +13,8 @@ namespace StudentApplication.Business.MappingProfiles
     {
         public SubjectMappingProfile()
         {
-            CreateMap<SubjectRequestDTO, Subject>();
+            CreateMap<SubjectRequestDTO, Subject>()
+                .ForMember(d => d.ProfessorId, opt => opt.MapFrom(s => s.ProfessorId));
             CreateMap<Subject, SubjectResponseDTO>();
         }
     }

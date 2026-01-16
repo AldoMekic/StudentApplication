@@ -6,9 +6,10 @@ import { HttpClient } from '@angular/common/http';
 export interface SubjectResponseDTO {
   id: number;
   title: string;
-  academicYear?: string;
+  year?: number; 
   academic_year?: string;
   description?: string;
+  professorId?: number;
 }
 
 export interface SubjectRequestDTO {
@@ -26,9 +27,15 @@ export class SubjectsService {
     return firstValueFrom(this.api.get<SubjectResponseDTO[]>('api/subjects'));
   }
 
-  create(dto: SubjectRequestDTO) {
-    return firstValueFrom(this.api.post('api/subjects', dto));
-  }
+  create(body: SubjectRequestDTO) {
+  const payload = {
+    title: body.title,
+    description: body.description,
+    year: Number(body.academicYear) || 1,     // map academicYear -> year
+    professorId: body.professorId
+  };
+  return firstValueFrom(this.api.post<void>('api/subjects', payload));
+}
 
   delete(id: number) {
     return firstValueFrom(this.api.delete(`api/subjects/${id}`));

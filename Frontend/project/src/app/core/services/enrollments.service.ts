@@ -37,4 +37,12 @@ export class EnrollmentsService {
   delete(id: number) {
     return firstValueFrom(this.api.delete(`api/enrollments/${id}`));
   }
+
+  drop(id: number) {
+    return firstValueFrom(this.api.put<EnrollmentResponseDTO>(`api/enrollments/${id}/drop`, {}));
+  }
+
+  complete(id: number) {
+    return firstValueFrom(this.api.put<EnrollmentResponseDTO>(`api/enrollments/${id}/complete`, {}));
+  }
 }

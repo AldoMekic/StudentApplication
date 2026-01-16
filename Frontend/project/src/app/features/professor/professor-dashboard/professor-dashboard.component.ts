@@ -147,6 +147,46 @@ const studentId = Number(maybeId);
     this.enrollments = rows;
   }
 
+  async dropEnrollment(row: RosterRow) {
+  if (!row.enrollmentId) {
+    alert('Enrollment ID is missing. Cannot drop.');
+    return;
+  }
+
+  if (!confirm('Are you sure you want to drop this student from the subject?')) return;
+
+  try {
+    await this.enrollmentsService.drop(row.enrollmentId);
+    await this.loadRosterForSelectedSubject();
+  } catch (err) {
+    console.error('[ProfessorDashboard] dropEnrollment failed', err);
+    alert('Failed to drop enrollment.');
+  }
+}
+
+async completeEnrollment(row: RosterRow) {
+  if (!row.enrollmentId) {
+    alert('Enrollment ID is missing. Cannot complete.');
+    return;
+  }
+
+  if (!confirm('Mark this enrollment as completed?')) return;
+
+  try {
+    await this.enrollmentsService.complete(row.enrollmentId);
+    await this.loadRosterForSelectedSubject();
+
+    // ✅ immediately start Step 4
+    // re-find the updated row (status now completed)
+    const updated = this.enrollments.find(x => x.enrollmentId === row.enrollmentId);
+    if (updated) this.openGradeModal(updated);
+
+  } catch (err) {
+    console.error('[ProfessorDashboard] completeEnrollment failed', err);
+    alert('Failed to complete enrollment.');
+  }
+}
+
   // === Grade modal ===
   openGradeModal(enrollment: RosterRow) {
     this.selectedEnrollment = enrollment;
@@ -163,37 +203,41 @@ const studentId = Number(maybeId);
   }
 
   async submitGrade() {
-    if (!this.selectedEnrollment || !this.selectedSubject || this.professorId == null) {
-      alert('Missing required data.');
-      return;
-    }
-    if (this.gradeValue == null || this.finalScore == null) {
-      alert('Please fill in grade and final score.');
-      return;
-    }
-
-    // Best-guess GradeRequest payload based on your controllers/mappings.
-    // If your GradeRequestDTO uses different field names, tell me and I’ll align it.
-    const dto: any = {
-      studentId: this.selectedEnrollment.studentId,
-      subjectId: this.selectedSubject.id,
-      professorId: this.professorId,
-      gradeValue: this.gradeValue,
-      finalScore: this.finalScore,
-      // Optional extras if your DTO supports them:
-      // enrollmentId: this.selectedEnrollment.enrollmentId,
-      // subjectName: this.selectedSubject.title,
-      // professorName: this.professorName
-    };
-
-    try {
-      await this.gradesService.create(dto);
-      this.closeGradeModal();
-      // Optionally refresh something here (e.g., disable the button or mark as completed)
-    } catch (err: any) {
-      alert('Failed to assign grade. If the backend expects different field names, I can adjust the payload.');
-    }
+  if (!this.selectedEnrollment) {
+    alert('Missing enrollment.');
+    return;
   }
+
+  if (!this.selectedEnrollment.enrollmentId) {
+    alert('Enrollment ID is missing. Cannot assign grade.');
+    return;
+  }
+
+  if (this.gradeValue == null || this.finalScore == null) {
+    alert('Please fill in grade and final score.');
+    return;
+  }
+
+  // ✅ Step 4: Grade must be tied to the EnrollmentId
+  const payload = {
+    enrollmentId: this.selectedEnrollment.enrollmentId,
+    officialGrade: this.gradeValue,
+    totalScore: this.finalScore
+  };
+
+  try {
+    await this.gradesService.create(payload);
+    this.closeGradeModal();
+
+    // optional: refresh roster to reflect status/lock actions
+    await this.loadRosterForSelectedSubject();
+
+    alert('Grade assigned successfully.');
+  } catch (err: any) {
+    console.error('[ProfessorDashboard] submitGrade failed', err);
+    alert(err?.error ?? 'Failed to assign grade.');
+  }
+}
 
   logout() {
     this.authService.logout();
